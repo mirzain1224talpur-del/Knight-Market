@@ -20,6 +20,10 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const FROM_EMAIL = "KnightMarket <hello@knightmarket.org>";
+const REPLY_TO = "hello@knightmarket.org";
+// One-click unsubscribe target. Gmail/Yahoo bulk rules expect a List-Unsubscribe
+// header; a mailto is widely accepted until an HTTPS unsubscribe page exists.
+const UNSUBSCRIBE_MAILTO = "unsubscribe@knightmarket.org";
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -46,6 +50,21 @@ const welcomeHtml = (): string => `
     You received this because you signed up at KnightMarket. Not affiliated with the University of Central Florida.
   </p>
 </div>`;
+
+// Plain-text alternative. Sending HTML with no text part is a strong spam
+// signal, so every send below includes both.
+const welcomeText = (): string =>
+  `Welcome, founding Knight!
+
+Thanks for joining the KnightMarket waitlist. You're officially in line for early access to UCF's marketplace — built for Knights, by Knights.
+
+We'll email you the moment we launch. Early members are free forever.
+
+Go Knights
+— The KnightMarket Team
+
+You received this because you signed up at KnightMarket. Not affiliated with the University of Central Florida.
+Unsubscribe: ${UNSUBSCRIBE_MAILTO}`;
 
 Deno.serve(async () => {
   // Everyone who hasn't been welcomed yet.
@@ -78,8 +97,13 @@ Deno.serve(async () => {
     const batch = chunk.map((row) => ({
       from: FROM_EMAIL,
       to: [row.email],
-      subject: "Welcome to KnightMarket ⚔️",
+      reply_to: REPLY_TO,
+      subject: "Welcome to KnightMarket",
       html: welcomeHtml(),
+      text: welcomeText(),
+      headers: {
+        "List-Unsubscribe": `<mailto:${UNSUBSCRIBE_MAILTO}?subject=unsubscribe>`,
+      },
     }));
 
     const res = await fetch("https://api.resend.com/emails/batch", {
