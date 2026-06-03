@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <title>KnightMarket mark</title>
+  <!-- Shield body -->
+  <path d="M12 12 L52 12 L52 28 C52 42 44 52 32 56 C20 52 12 42 12 28 Z" fill="#FFC904"/>
+  <!-- Inner rim accent -->
+  <path d="M16 16 L48 16 L48 28 C48 40 41 49 32 52 C23 49 16 40 16 28 Z" stroke="#0A0A0A" stroke-opacity="0.13" stroke-width="1" fill="none"/>
+  <!-- K monogram -->
+  <text x="32" y="42" text-anchor="middle" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="26" fill="#0A0A0A">K</text>
+</svg>

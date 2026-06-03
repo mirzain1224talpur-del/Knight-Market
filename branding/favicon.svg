@@ -1,0 +1,6 @@
+<svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <title>KnightMarket favicon</title>
+  <!-- Slightly tighter shield for small sizes -->
+  <path d="M10 10 L54 10 L54 28 C54 43 45 53 32 58 C19 53 10 43 10 28 Z" fill="#FFC904"/>
+  <text x="32" y="44" text-anchor="middle" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="32" fill="#0A0A0A">K</text>
+</svg>

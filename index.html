@@ -300,9 +300,8 @@
   <section class="km-waitlist" id="waitlist">
     <h2>Be a founding Knight</h2>
     <p>Join the waitlist and get early access before anyone else. Free forever for early members.</p>
-    <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return handleWaitlist(event)">
-      <input type="hidden" name="form-name" value="waitlist" />
-      <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
+    <form name="waitlist" onsubmit="return handleWaitlist(event)">
+      <input type="text" name="_honey" style="display:none" aria-hidden="true" tabindex="-1" autocomplete="off" />
       <div class="km-email-row">
         <input class="km-input" type="email" name="email" id="emailInput" placeholder="yourname@knights.ucf.edu" required />
         <button class="km-btn-primary" type="submit">Get early access</button>
@@ -315,30 +314,42 @@
     © 2025 KnightMarket · For UCF students, by UCF students · Not affiliated with the University of Central Florida
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    function handleWaitlist(event) {
+    // Supabase anon key is public by design — access is controlled by Row Level Security.
+    const SUPABASE_URL = 'https://luidnjanoxtcdpadvkrz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1aWRuamFub3h0Y2RwYWR2a3J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MjU5NzcsImV4cCI6MjA5NTUwMTk3N30.zhEKEqnANczD1xPDmO8hS7-lxR5rN-a-7NFvgX0pP6Y';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function handleWaitlist(event) {
       event.preventDefault();
       const form = event.target;
       const emailInput = document.getElementById('emailInput');
-      const email = emailInput.value;
+      const email = emailInput.value.trim().toLowerCase();
+
+      // Honeypot: bots fill hidden fields — silently drop them.
+      if (form._honey && form._honey.value) return false;
+
       if (!email.includes('ucf.edu')) {
         emailInput.style.borderColor = 'rgba(255,80,80,0.5)';
         emailInput.value = '';
         emailInput.placeholder = 'Must be a ucf.edu email';
         return false;
       }
-      const data = new FormData(form);
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      }).then(() => {
-        form.style.display = 'none';
-        document.getElementById('successMsg').style.display = 'block';
-      }).catch(() => {
-        form.style.display = 'none';
-        document.getElementById('successMsg').style.display = 'block';
-      });
+
+      const { error } = await db.from('waitlist').insert({ email });
+
+      // 23505 = duplicate email; they're already signed up, so treat as success.
+      if (error && error.code !== '23505') {
+        emailInput.style.borderColor = 'rgba(255,80,80,0.5)';
+        emailInput.value = '';
+        emailInput.placeholder = 'Something went wrong — try again';
+        console.error('Waitlist insert failed:', error);
+        return false;
+      }
+
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
       return false;
     }
   </script>
