@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KnightMarket – UCF's Super App</title>
+  <link rel="icon" href="branding/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
@@ -13,8 +14,8 @@
 
     /* NAV */
     .km-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); position: sticky; top: 0; background: rgba(10,10,10,0.92); backdrop-filter: blur(10px); z-index: 100; }
-    .km-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: #F5F0E8; }
-    .km-logo span { color: #FFC904; }
+    .km-logo { display: inline-flex; align-items: center; }
+    .km-logo .km-lockup { display: block; height: 30px; width: auto; }
     .km-badge { font-size: 11px; font-weight: 500; background: rgba(255,201,4,0.12); color: #FFC904; border: 0.5px solid rgba(255,201,4,0.3); padding: 4px 10px; border-radius: 20px; letter-spacing: 0.3px; }
 
     /* HERO */
@@ -130,7 +131,27 @@
 <body>
 
   <nav class="km-nav">
-    <div class="km-logo">Knight<span>Market</span></div>
+    <div class="km-logo">
+      <svg class="km-lockup" viewBox="0 0 300 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KnightMarket">
+        <defs>
+          <linearGradient id="ksg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFE680"/><stop offset="0.5" stop-color="#FFC107"/><stop offset="1" stop-color="#E09A00"/>
+          </linearGradient>
+        </defs>
+        <!-- K-Sword, scaled & baseline-aligned to the wordmark -->
+        <g transform="translate(-6.1 5.35) scale(0.758)">
+          <g stroke="url(#ksg)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.5 13 V51"/>
+            <path d="M21 33 L43 13"/>
+          </g>
+          <path d="M21 33 L52 57 L49 59 L44 55 L21 42 Z" fill="url(#ksg)"/>
+          <path d="M35 50 L45 41" stroke="url(#ksg)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <text x="37" y="44" font-family="'Syne',sans-serif" font-weight="800" font-size="40" letter-spacing="-1">
+          <tspan fill="#FFDE7A">night</tspan><tspan fill="#FFC107">Market</tspan>
+        </text>
+      </svg>
+    </div>
     <div class="km-badge">UCF Exclusive · Coming Soon</div>
   </nav>
 

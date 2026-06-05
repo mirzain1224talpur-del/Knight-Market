@@ -1,11 +1,11 @@
-<svg width="320" height="64" viewBox="0 0 320 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+<svg width="340" height="64" viewBox="0 0 340 64" xmlns="http://www.w3.org/2000/svg" fill="none">
   <title>KnightMarket logo (for light backgrounds)</title>
-  <!-- Shield mark -->
-  <path d="M12 12 L52 12 L52 28 C52 42 44 52 32 56 C20 52 12 42 12 28 Z" fill="#FFC904"/>
-  <path d="M16 16 L48 16 L48 28 C48 40 41 49 32 52 C23 49 16 40 16 28 Z" stroke="#0A0A0A" stroke-opacity="0.13" stroke-width="1" fill="none"/>
-  <text x="32" y="42" text-anchor="middle" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="26" fill="#0A0A0A">K</text>
+  <!-- Chess-knight badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#7C5CFF"/>
+  <path d="M21 51 L44 51 L44 47 C44 43 42 40 39 38 C43 36 47 32 48 27 C50 21 48 15 43 12 C40 10 36 10 33 12 L32 7 L28 11 C24 10 20 12 17 16 C15 19 14 23 15 27 L12 29 L17 31 C18 31 19 30 20 29 C21 32 23 34 25 35 C23 38 22 41 22 44 L19 46 C19 46 19 49 21 51 Z" fill="#0E0B1A"/>
+  <circle cx="34" cy="20" r="1.8" fill="#7C5CFF"/>
   <!-- Wordmark -->
-  <text x="74" y="42" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="28" letter-spacing="-1">
-    <tspan fill="#0A0A0A">Knight</tspan><tspan fill="#FFC904">Market</tspan>
+  <text x="78" y="42" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="28" letter-spacing="-1">
+    <tspan fill="#0E0B1A">Knight</tspan><tspan fill="#7C5CFF">Market</tspan>
   </text>
 </svg>

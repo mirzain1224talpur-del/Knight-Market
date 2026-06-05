@@ -1,6 +1,17 @@
 <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
-  <title>KnightMarket favicon</title>
-  <!-- Slightly tighter shield for small sizes -->
-  <path d="M10 10 L54 10 L54 28 C54 43 45 53 32 58 C19 53 10 43 10 28 Z" fill="#FFC904"/>
-  <text x="32" y="44" text-anchor="middle" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="32" fill="#0A0A0A">K</text>
+  <title>KnightMarket favicon (K-Sword)</title>
+  <defs>
+    <linearGradient id="ksg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE680"/><stop offset="0.5" stop-color="#FFC107"/><stop offset="1" stop-color="#E09A00"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#15130D"/>
+  <g transform="translate(-2 -4)">
+    <g stroke="url(#ksg)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 13 V51"/>
+      <path d="M21 33 L43 13"/>
+    </g>
+    <path d="M21 33 L52 57 L49 59 L44 55 L21 42 Z" fill="url(#ksg)"/>
+    <path d="M35 50 L45 41" stroke="url(#ksg)" stroke-width="5" stroke-linecap="round"/>
+  </g>
 </svg>

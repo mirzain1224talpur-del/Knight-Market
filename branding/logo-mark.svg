@@ -1,9 +1,17 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
-  <title>KnightMarket mark</title>
-  <!-- Shield body -->
-  <path d="M12 12 L52 12 L52 28 C52 42 44 52 32 56 C20 52 12 42 12 28 Z" fill="#FFC904"/>
-  <!-- Inner rim accent -->
-  <path d="M16 16 L48 16 L48 28 C48 40 41 49 32 52 C23 49 16 40 16 28 Z" stroke="#0A0A0A" stroke-opacity="0.13" stroke-width="1" fill="none"/>
-  <!-- K monogram -->
-  <text x="32" y="42" text-anchor="middle" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="26" fill="#0A0A0A">K</text>
+  <title>KnightMarket mark (K-Sword)</title>
+  <defs>
+    <linearGradient id="ksg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE680"/><stop offset="0.5" stop-color="#FFC107"/><stop offset="1" stop-color="#E09A00"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#15130D" stroke="rgba(255,201,4,0.28)"/>
+  <g transform="translate(-2 -4)">
+    <g stroke="url(#ksg)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 13 V51"/>
+      <path d="M21 33 L43 13"/>
+    </g>
+    <path d="M21 33 L52 57 L49 59 L44 55 L21 42 Z" fill="url(#ksg)"/>
+    <path d="M35 50 L45 41" stroke="url(#ksg)" stroke-width="5" stroke-linecap="round"/>
+  </g>
 </svg>
