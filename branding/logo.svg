@@ -1,11 +1,22 @@
 <svg width="340" height="64" viewBox="0 0 340 64" xmlns="http://www.w3.org/2000/svg" fill="none">
   <title>KnightMarket logo (for dark backgrounds)</title>
-  <!-- Chess-knight badge -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="#7C5CFF"/>
-  <path d="M21 51 L44 51 L44 47 C44 43 42 40 39 38 C43 36 47 32 48 27 C50 21 48 15 43 12 C40 10 36 10 33 12 L32 7 L28 11 C24 10 20 12 17 16 C15 19 14 23 15 27 L12 29 L17 31 C18 31 19 30 20 29 C21 32 23 34 25 35 C23 38 22 41 22 44 L19 46 C19 46 19 49 21 51 Z" fill="#0E0B1A"/>
-  <circle cx="34" cy="20" r="1.8" fill="#7C5CFF"/>
+  <defs>
+    <linearGradient id="ksg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE680"/><stop offset="0.5" stop-color="#FFC107"/><stop offset="1" stop-color="#E09A00"/>
+    </linearGradient>
+  </defs>
+  <!-- K-Sword badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#15130D" stroke="rgba(255,201,4,0.28)"/>
+  <g transform="translate(-2 -4)">
+    <g stroke="url(#ksg)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.5 13 V51"/>
+      <path d="M21 33 L43 13"/>
+    </g>
+    <path d="M21 33 L52 57 L49 59 L44 55 L21 42 Z" fill="url(#ksg)"/>
+    <path d="M35 50 L45 41" stroke="url(#ksg)" stroke-width="5" stroke-linecap="round"/>
+  </g>
   <!-- Wordmark -->
   <text x="78" y="42" font-family="'Syne','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="28" letter-spacing="-1">
-    <tspan fill="#F4F1FF">Knight</tspan><tspan fill="#7C5CFF">Market</tspan>
+    <tspan fill="#F5F2E8">Knight</tspan><tspan fill="#FFC107">Market</tspan>
   </text>
 </svg>
