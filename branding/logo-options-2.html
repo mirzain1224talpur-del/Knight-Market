@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — More Logo Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Syne', system-ui, sans-serif; background: #0A0A0A; color: #F5F0E8; padding: 48px 24px 80px; }
+  h1 { font-size: 28px; text-align: center; margin-bottom: 6px; }
+  .sub { text-align: center; opacity: .5; font-size: 14px; margin-bottom: 40px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 22px; max-width: 1080px; margin: 0 auto; }
+  .card { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; overflow: hidden; background: #141414; }
+  .name { padding: 14px 18px; font-size: 14px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center;}
+  .desc { font-size: 11px; opacity:.5; font-weight:400; }
+  .scene { padding: 30px 24px; display: flex; align-items: center; gap: 18px; }
+  .scene.light { background: #F5F0E8; }
+  .lockup { display: flex; align-items: center; gap: 13px; }
+  .word { font-weight: 800; font-size: 25px; letter-spacing: -1px; white-space: nowrap; }
+  .scene .word .k { color: #F5F0E8; }
+  .scene.light .word .k { color: #0A0A0A; }
+  .word .m { color: #FFC904; }
+  .sizes { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <h1>KnightMarket — More Options</h1>
+  <div class="sub">Options 5–10 · black &amp; gold · big = logo, small = favicon · top dark, bottom light. Pick a number.</div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  const badge = `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>`;
+  const icons = {
+    store: badge + `
+      <path d="M13 21 H51 L48 30 H16 Z" fill="#0A0A0A"/>
+      <rect x="17" y="30" width="30" height="22" rx="2" fill="#0A0A0A"/>
+      <rect x="28" y="39" width="8" height="13" rx="1" fill="#FFC904"/>`,
+    pin: badge + `
+      <path d="M32 12 C23.2 12 16 19.2 16 28 C16 39.5 30.5 52 32 53.2 C33.5 52 48 39.5 48 28 C48 19.2 40.8 12 32 12 Z" fill="#0A0A0A"/>
+      <circle cx="32" cy="27.5" r="6" fill="#FFC904"/>`,
+    chat: badge + `
+      <path d="M15 15 H49 C51.2 15 53 16.8 53 19 V37 C53 39.2 51.2 41 49 41 H31 L21 49 V41 H15 C12.8 41 11 39.2 11 37 V19 C11 16.8 12.8 15 15 15 Z" fill="#0A0A0A"/>
+      <circle cx="23" cy="28" r="2.7" fill="#FFC904"/><circle cx="32" cy="28" r="2.7" fill="#FFC904"/><circle cx="41" cy="28" r="2.7" fill="#FFC904"/>`,
+    km: badge + `
+      <text x="32" y="42" text-anchor="middle" font-family="Syne, sans-serif" font-weight="900" font-size="25" letter-spacing="-1.5" fill="#0A0A0A">KM</text>`,
+    crown: badge + `
+      <path d="M14 42 L14 23 L24.5 31 L32 17 L39.5 31 L50 23 L50 42 Z" fill="#0A0A0A"/>
+      <rect x="14" y="45" width="36" height="6" rx="1.5" fill="#0A0A0A"/>`,
+    bolt: badge + `
+      <path d="M35 9 L19 35 H29.5 L27 55 L45 27 H34 Z" fill="#0A0A0A"/>`,
+  };
+
+  function mark(size, key){ return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">${icons[key]}</svg>`; }
+
+  const opts = [
+    { n:'5 — Storefront', d:'a shop / market stall', key:'store' },
+    { n:'6 — Location Pin', d:'campus-first, local marketplace', key:'pin' },
+    { n:'7 — Chat Bubble', d:'in-app deals & messaging', key:'chat' },
+    { n:'8 — KM Monogram', d:'two-letter lettermark', key:'km' },
+    { n:'9 — Crown', d:'regal nod to "Knight" (no knight figure)', key:'crown' },
+    { n:'10 — Bolt', d:'fast, the "super app" energy', key:'bolt' },
+  ];
+
+  const grid = document.getElementById('grid');
+  opts.forEach(o => {
+    const scene = (cls) => `
+      <div class="scene ${cls}">
+        <div class="lockup">${mark(44,o.key)}<span class="word"><span class="k">Knight</span><span class="m">Market</span></span></div>
+        <div class="sizes">${mark(28,o.key)}${mark(16,o.key)}</div>
+      </div>`;
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="name"><span>${o.n}</span><span class="desc">${o.d}</span></div>
+        ${scene('')}
+        ${scene('light')}
+      </div>`);
+  });
+</script>
+</body>
+</html>

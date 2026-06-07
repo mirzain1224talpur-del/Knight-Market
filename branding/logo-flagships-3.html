@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — Flagship Marks III</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Syne', system-ui, sans-serif; background: radial-gradient(circle at 50% 0%, #1a1813, #0A0A0A 60%); color: #F5F0E8; padding: 56px 24px 100px; }
+  h1 { font-size: 30px; text-align: center; margin-bottom: 6px; letter-spacing:-.5px; }
+  .sub { text-align: center; opacity: .55; font-size: 14px; margin: 0 auto 48px; max-width:640px; line-height:1.5; }
+  .stack { display:flex; flex-direction:column; gap: 26px; max-width: 860px; margin: 0 auto; }
+  .card { border: 1px solid rgba(255,201,4,.14); border-radius: 22px; background: linear-gradient(180deg, #16140f, #100f0c); overflow:hidden; }
+  .hero { display:flex; align-items:center; gap:34px; padding: 38px 40px; }
+  .big { flex-shrink:0; filter: drop-shadow(0 6px 24px rgba(255,201,4,.18)); }
+  .meta { flex:1; }
+  .meta .num { font-size:11px; letter-spacing:2px; opacity:.4; text-transform:uppercase; }
+  .meta h2 { font-size:23px; margin:4px 0 8px; }
+  .meta p { font-size:13px; opacity:.6; line-height:1.55; }
+  .row { display:flex; align-items:center; gap:28px; padding: 22px 40px; border-top:1px solid rgba(255,255,255,.06); background:#0c0b09;}
+  .lockup { display:flex; align-items:center; gap:14px; }
+  .word { font-weight:800; font-size:25px; letter-spacing:-1px; }
+  .word .k { color:#F5F0E8; } .word .m { color:#FFC904; }
+  .icons { margin-left:auto; display:flex; align-items:center; gap:16px; }
+  .cap { font-size:10px; opacity:.35; text-align:center; margin-top:6px; }
+  .appicon { border-radius:14px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE27A"/><stop offset="0.55" stop-color="#FFC904"/><stop offset="1" stop-color="#E09A00"/>
+    </linearGradient>
+  </defs></svg>
+
+  <h1>KnightMarket — Flagship Marks III</h1>
+  <div class="sub">Four more, leaning into iconic single-glyph territory — the kind of mark that works as one shape on an app icon.</div>
+
+  <div class="stack" id="stack"></div>
+
+<script>
+  const G = 'url(#gold)';
+  const emblems = {
+    // 09 — prism: a faceted upward triangle = value, forward, premium
+    prism: `
+      <path d="M32 11 L53 47 H11 Z" fill="${G}"/>
+      <g stroke="#0A0A0A" stroke-opacity=".2" stroke-width="1.4" fill="none" stroke-linejoin="round">
+        <path d="M32 11 V47"/><path d="M32 47 L20 30"/><path d="M32 47 L44 30"/><path d="M20 30 H44"/>
+      </g>`,
+    // 10 — compass: a 4-point star in a ring = navigate / discover the marketplace
+    compass: `
+      <circle cx="32" cy="32" r="21" fill="none" stroke="${G}" stroke-width="2.6"/>
+      <path d="M32 14 L35.5 28.5 L50 32 L35.5 35.5 L32 50 L28.5 35.5 L14 32 L28.5 28.5 Z" fill="${G}"/>`,
+    // 11 — stack: layered tiles = a marketplace of listings, depth, collection
+    stack: `
+      <path d="M32 12 L51 22 L32 32 L13 22 Z" fill="${G}"/>
+      <path d="M13 30.5 L32 40.5 L51 30.5" fill="none" stroke="${G}" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M13 39 L32 49 L51 39" fill="none" stroke="${G}" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>`,
+    // 12 — embrace: a crescent holding a dot = a community around the individual, trust
+    embrace: `
+      <path d="M40 13 A20 20 0 1 0 40 51 A15.5 15.5 0 1 1 40 13 Z" fill="${G}"/>
+      <circle cx="30" cy="32" r="6.6" fill="${G}"/>`,
+  };
+
+  function bare(size, key){ return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">${emblems[key]}</svg>`; }
+  function appicon(size, key){ return `<svg class="appicon" width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="64" height="64" rx="15" fill="#0E0D0B" stroke="rgba(255,201,4,.18)"/>${emblems[key]}</svg>`; }
+
+  const opts = [
+    { n:'Flagship 09', t:'Prism', key:'prism', d:'A faceted triangle pointing up — value, forward motion, premium. Bold, simple, unmistakable as one glyph.' },
+    { n:'Flagship 10', t:'Compass', key:'compass', d:'A four-point star in a ring — navigate & discover. Classy, balanced, “find what you need” in one mark.' },
+    { n:'Flagship 11', t:'Stack', key:'stack', d:'Layered tiles — a marketplace full of listings, with depth. Modern, techy, scales beautifully.' },
+    { n:'Flagship 12', t:'Embrace', key:'embrace', d:'A crescent cradling a dot — a community around the individual, protection, trust. Minimal and warm.' },
+  ];
+
+  const stack = document.getElementById('stack');
+  opts.forEach(o => {
+    stack.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="hero">
+          <div class="big">${bare(120, o.key)}</div>
+          <div class="meta"><div class="num">${o.n}</div><h2>${o.t}</h2><p>${o.d}</p></div>
+        </div>
+        <div class="row">
+          <div class="lockup">${bare(40,o.key)}<span class="word"><span class="k">Knight</span><span class="m">Market</span></span></div>
+          <div class="icons">
+            <div><div>${appicon(52,o.key)}</div><div class="cap">app icon</div></div>
+            <div><div>${appicon(28,o.key)}</div><div class="cap">favicon</div></div>
+          </div>
+        </div>
+      </div>`);
+  });
+</script>
+</body>
+</html>

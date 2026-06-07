@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — Full Logo List</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Syne', system-ui, sans-serif; background:#0A0A0A; color:#F5F0E8; padding: 50px 24px 90px; }
+  h1 { font-size: 32px; text-align:center; }
+  .sub { text-align:center; opacity:.55; font-size:14px; margin: 8px auto 14px; max-width:640px; line-height:1.5; }
+  .count { text-align:center; font-size:12px; color:#FFC904; opacity:.8; margin-bottom:36px; letter-spacing:1px; }
+  .section { max-width:1140px; margin: 0 auto 14px; }
+  .sec-title { font-size:13px; letter-spacing:2px; text-transform:uppercase; opacity:.5; margin: 34px 0 14px; border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:8px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap:16px; max-width:1140px; margin:0 auto; }
+  .card { border:1px solid rgba(255,255,255,.09); border-radius:16px; background:#131210; padding:18px 14px 14px; text-align:center; position:relative; transition:border-color .15s, transform .15s; }
+  .card:hover { border-color:rgba(255,201,4,.5); transform:translateY(-2px); }
+  .num { position:absolute; top:10px; left:11px; min-width:24px; height:24px; padding:0 6px; border-radius:12px; background:rgba(255,201,4,.12); color:#FFC904; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
+  .marks { display:flex; align-items:center; justify-content:center; gap:12px; margin:8px 0 12px; }
+  .nm { font-size:13.5px; font-weight:800; }
+  .dz { font-size:10.5px; opacity:.45; margin-top:3px; line-height:1.35; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE27A"/><stop offset="0.55" stop-color="#FFC904"/><stop offset="1" stop-color="#E09A00"/>
+    </linearGradient>
+  </defs></svg>
+
+  <h1>KnightMarket — The Full Logo List</h1>
+  <div class="sub">Every concept in one place, numbered. Big = logo size, small = favicon size. Sections 1–4 are the flat black-&-gold style; Section 5 is the premium “flagship” finish.</div>
+  <div class="count" id="count"></div>
+
+  <div id="root"></div>
+
+<script>
+  const BADGE = `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>`;
+  const TILE  = `<rect width="64" height="64" rx="15" fill="#0E0D0B" stroke="rgba(255,201,4,.18)"/>`;
+  const D='#0A0A0A', Gf='#FFC904', Gp='url(#gold)', Kt='#0E0D0B';
+  const tagPath  = `M34 13 L52 13 C53.7 13 55 14.3 55 16 L55 34 C55 34.8 54.7 35.6 54.1 36.2 L36.2 54.1 C34.6 55.7 32 55.7 30.4 54.1 L13.9 37.6 C12.3 36 12.3 33.4 13.9 31.8 L31.8 13.9 C32.4 13.3 33.2 13 34 13 Z`;
+  const bagBody  = `M17 24 H47 L48.5 49.5 a3.5 3.5 0 0 1 -3.5 3.7 H19 a3.5 3.5 0 0 1 -3.5 -3.7 Z`;
+  const bagHandle= `M25 24 V19.5 C25 15.4 28.1 12 32 12 C35.9 12 39 15.4 39 19.5 V24`;
+  const petal    = `M32 32 C27.8 23 27.8 13 32 9 C36.2 13 36.2 23 32 32 Z`;
+
+  const E = {
+    // ---- Group 1: Marketplace & shopping (flat) ----
+    tag: BADGE+`<path d="${tagPath}" fill="${D}"/><circle cx="45" cy="23" r="3.6" fill="${Gf}"/>`,
+    tagk: BADGE+`<path d="${tagPath}" fill="${D}"/><circle cx="45.5" cy="23.5" r="3.6" fill="${Gf}"/><text x="30" y="44" text-anchor="middle" font-weight="900" font-size="20" fill="${Gf}">K</text>`,
+    verifiedtag: BADGE+`<path d="${tagPath}" fill="${D}"/><circle cx="45.5" cy="23.5" r="3.6" fill="${Gf}"/><path d="M25 36 L30.5 41.5 L41 28" stroke="${Gf}" stroke-width="4.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+    bag: BADGE+`<path d="M19 25 H45 L46.5 51 C46.6 52.1 45.7 53 44.5 53 H19.5 C18.3 53 17.4 52.1 17.5 51 Z" fill="${D}"/><path d="M26 25 V20 C26 16.1 28.7 13 32 13 C35.3 13 38 16.1 38 20 V25" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+    bagk: BADGE+`<path d="${bagBody}" fill="${D}"/><path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><text x="32" y="47" text-anchor="middle" font-weight="900" font-size="20" fill="${Gf}">K</text>`,
+    bagchat: BADGE+`<path d="M16 27 a6 6 0 0 1 6 -6 H42 a6 6 0 0 1 6 6 V43 a6 6 0 0 1 -6 6 H28 L20 55 V49 H22 a6 6 0 0 1 -6 -6 Z" fill="${D}"/><path d="M25.5 21 V18.5 a6.5 6.5 0 0 1 13 0 V21" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="32" cy="35" r="3" fill="${Gf}"/><circle cx="23" cy="35" r="3" fill="${Gf}"/><circle cx="41" cy="35" r="3" fill="${Gf}"/>`,
+    verifiedbag: BADGE+`<path d="${bagBody}" fill="${D}"/><path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M25 38 L30.5 43.5 L41 30" stroke="${Gf}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+    communitybag: BADGE+`<path d="${bagBody}" fill="${D}"/><path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><g stroke="${Gf}" stroke-width="1.8"><line x1="25" y1="35" x2="38" y2="32"/><line x1="38" y1="32" x2="40" y2="44"/><line x1="40" y1="44" x2="27" y2="46"/><line x1="27" y1="46" x2="25" y2="35"/></g><circle cx="25" cy="35" r="2.6" fill="${Gf}"/><circle cx="38" cy="32" r="2.6" fill="${Gf}"/><circle cx="40" cy="44" r="2.6" fill="${Gf}"/><circle cx="27" cy="46" r="2.6" fill="${Gf}"/>`,
+    risingbag: BADGE+`<path d="${bagBody}" fill="${D}"/><path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><g stroke="${Gf}" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M32 46 V33"/><path d="M26 39 L32 32 L38 39"/></g>`,
+    cart: BADGE+`<g stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M13 16 H19 L23.5 39 H44 L48.5 23 H21.5"/></g><circle cx="25" cy="47" r="3.6" fill="${D}"/><circle cx="42" cy="47" r="3.6" fill="${D}"/>`,
+    store: BADGE+`<rect x="17" y="32" width="30" height="21" rx="2" fill="${D}"/><rect x="28" y="40" width="8" height="13" rx="1" fill="${Gf}"/><path d="M13 20 H51 L48.5 31 H15.5 Z" fill="${D}"/><rect x="13" y="20" width="38" height="4.5" rx="1" fill="${D}"/>`,
+    awningm: BADGE+`<rect x="16" y="34" width="32" height="18" rx="2" fill="${D}"/><rect x="28" y="40" width="8" height="12" rx="1" fill="${Gf}"/><path d="M13 21 H51 V28 C48 32 45 28 43.3 25 C41.6 28 38.6 32 35.7 28 C34 25 33 25 32 28 C30.5 32 27.5 32 25.7 28 C24 25 21 28 19.3 28 C17 28 14 25 13 28 Z" fill="${D}"/><path d="M13 21 H51 V25 H13 Z" fill="${D}"/>`,
+
+    // ---- Group 2: Letters & symbols (flat) ----
+    monoK: BADGE+`<text x="32" y="45" text-anchor="middle" font-weight="900" font-size="38" fill="${D}">K</text>`,
+    km: BADGE+`<text x="32" y="42" text-anchor="middle" font-weight="900" font-size="25" letter-spacing="-1.5" fill="${D}">KM</text>`,
+    crown: BADGE+`<path d="M14 42 L14 23 L24.5 31 L32 17 L39.5 31 L50 23 L50 42 Z" fill="${D}"/><rect x="14" y="45" width="36" height="6" rx="1.5" fill="${D}"/>`,
+    bolt: BADGE+`<path d="M35 9 L19 35 H29.5 L27 55 L45 27 H34 Z" fill="${D}"/>`,
+    growthk: BADGE+`<g stroke="${D}" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M23 14 V50"/><path d="M23 33 L41 51"/><path d="M23 33 L43 15"/><path d="M34 15 H43 V24"/></g>`,
+
+    // ---- Group 3: Place & community (flat) ----
+    pin: BADGE+`<path d="M32 12 C23.2 12 16 19.2 16 28 C16 39.5 30.5 52 32 53.2 C33.5 52 48 39.5 48 28 C48 19.2 40.8 12 32 12 Z" fill="${D}"/><circle cx="32" cy="27.5" r="6" fill="${Gf}"/>`,
+    pinhome: BADGE+`<path d="M32 11 C22.6 11 15 18.6 15 28 C15 40 30 53.5 32 55 C34 53.5 49 40 49 28 C49 18.6 41.4 11 32 11 Z" fill="${D}"/><path d="M24 31 L32 23.5 L40 31 Z" fill="${Gf}"/><rect x="27.5" y="30" width="9" height="9" fill="${Gf}"/>`,
+    chat: BADGE+`<path d="M15 15 H49 C51.2 15 53 16.8 53 19 V37 C53 39.2 51.2 41 49 41 H31 L21 49 V41 H15 C12.8 41 11 39.2 11 37 V19 C11 16.8 12.8 15 15 15 Z" fill="${D}"/><circle cx="23" cy="28" r="2.7" fill="${Gf}"/><circle cx="32" cy="28" r="2.7" fill="${Gf}"/><circle cx="41" cy="28" r="2.7" fill="${Gf}"/>`,
+    hub: BADGE+`<g stroke="${D}" stroke-width="3.4"><line x1="32" y1="32" x2="32" y2="13"/><line x1="32" y1="32" x2="50.1" y2="26.1"/><line x1="32" y1="32" x2="43.2" y2="47.4"/><line x1="32" y1="32" x2="20.8" y2="47.4"/><line x1="32" y1="32" x2="13.9" y2="26.1"/></g><circle cx="32" cy="32" r="7" fill="${D}"/><circle cx="32" cy="13" r="4.3" fill="${D}"/><circle cx="50.1" cy="26.1" r="4.3" fill="${D}"/><circle cx="43.2" cy="47.4" r="4.3" fill="${D}"/><circle cx="20.8" cy="47.4" r="4.3" fill="${D}"/><circle cx="13.9" cy="26.1" r="4.3" fill="${D}"/>`,
+    constellation: BADGE+`<g stroke="${D}" stroke-width="2.6"><line x1="17" y1="23" x2="31" y2="16"/><line x1="31" y1="16" x2="46" y2="25"/><line x1="46" y1="25" x2="39" y2="43"/><line x1="39" y1="43" x2="21" y2="41"/><line x1="21" y1="41" x2="17" y2="23"/><line x1="31" y1="16" x2="39" y2="43"/></g><circle cx="17" cy="23" r="3.4" fill="${D}"/><circle cx="31" cy="16" r="3.9" fill="${D}"/><circle cx="46" cy="25" r="3.4" fill="${D}"/><circle cx="39" cy="43" r="4.2" fill="${D}"/><circle cx="21" cy="41" r="3.4" fill="${D}"/>`,
+    linked: BADGE+`<rect x="13" y="20" width="25" height="25" rx="8" stroke="${D}" stroke-width="5" fill="none"/><rect x="26" y="20" width="25" height="25" rx="8" stroke="${D}" stroke-width="5" fill="none"/>`,
+    bridge: BADGE+`<path d="M13 48 V35 A19 19 0 0 1 51 35 V48" stroke="${D}" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="13" cy="50.5" r="3.6" fill="${D}"/><circle cx="51" cy="50.5" r="3.6" fill="${D}"/>`,
+    deal: BADGE+`<g stroke="${D}" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17 L29 32 L15 47"/><path d="M49 17 L35 32 L49 47"/></g>`,
+    hexagon: BADGE+`<path d="M32 12 L49 22 V42 L32 52 L15 42 V22 Z" fill="none" stroke="${D}" stroke-width="4" stroke-linejoin="round"/><circle cx="32" cy="32" r="5" fill="${D}"/>`,
+    heart: BADGE+`<path d="M32 50 C13 38 16 21 26 21 C30 21 32 24.5 32 27 C32 24.5 34 21 38 21 C48 21 51 38 32 50 Z" fill="${D}"/>`,
+
+    // ---- Group 4: Abstract & motion (flat) ----
+    swap: BADGE+`<g stroke="${D}" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 26 H46"/><path d="M39 19 L47 26 L39 33"/><path d="M48 38 H18"/><path d="M25 31 L17 38 L25 45"/></g>`,
+    loop: BADGE+`<g stroke="${D}" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M19 39 A16 16 0 0 1 41 18"/><path d="M33 16.5 L41.5 17.8 L40.2 26.3"/><path d="M45 25 A16 16 0 0 1 23 46"/><path d="M31 47.5 L22.5 46.2 L23.8 37.7"/></g>`,
+    infinity: BADGE+`<path d="M32 32 C27 24 17 24 17 32 C17 40 27 40 32 32 C37 24 47 24 47 32 C47 40 37 40 32 32 Z" stroke="${D}" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+    pulse: BADGE+`<circle cx="32" cy="40" r="5" fill="${D}"/><path d="M22 35 A13 13 0 0 1 42 35" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M16 29 A21 21 0 0 1 48 29" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+    spark: BADGE+`<path d="M32 9 C33.4 24 40 30.6 55 32 C40 33.4 33.4 40 32 55 C30.6 40 24 33.4 9 32 C24 30.6 30.6 24 32 9 Z" fill="${D}"/>`,
+
+    // ---- Group 5: Premium flagships (black tile + gold gradient) ----
+    gather: TILE+`<path d="M32 7 C44.5 7 53 16 53 28.5 C53 42 38 53 32 57 C26 53 11 42 11 28.5 C11 16 19.5 7 32 7 Z" fill="${Gp}"/><circle cx="32" cy="25" r="6.4" fill="${Kt}"/><path d="M20.5 45 C20.5 34.8 43.5 34.8 43.5 45 Z" fill="${Kt}"/>`,
+    apex: TILE+`<path d="M22 17 H42 L52 29 L32 54 L12 29 Z" fill="${Gp}"/><g stroke="${Kt}" stroke-opacity=".5" stroke-width="1.4" fill="none" stroke-linejoin="round"><path d="M12 29 H52"/><path d="M22 17 L26.5 29 L32 54"/><path d="M42 17 L37.5 29 L32 54"/><path d="M26.5 29 H37.5"/></g>`,
+    bloom: TILE+`<g fill="${Gp}"><path d="${petal}"/><path d="${petal}" transform="rotate(120 32 32)"/><path d="${petal}" transform="rotate(240 32 32)"/></g><circle cx="32" cy="32" r="3.4" fill="${Kt}"/>`,
+    orbit: TILE+`<circle cx="32" cy="32" r="20" fill="none" stroke="${Gp}" stroke-width="3.4"/><circle cx="32" cy="32" r="7.6" fill="${Gp}"/><circle cx="32" cy="12" r="4.6" fill="${Gp}"/>`,
+    aperture: TILE+`<g fill="${Gp}"><path d="M33 30 L33 12 L47.5 20.5 Z"/><path d="M33 30 L33 12 L47.5 20.5 Z" transform="rotate(120 32 32)"/><path d="M33 30 L33 12 L47.5 20.5 Z" transform="rotate(240 32 32)"/></g>`,
+    ascend: TILE+`<g stroke="${Gp}" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 42 L32 26 L49 42"/><path d="M21.5 27 L32 17 L42.5 27"/></g>`,
+    union: TILE+`<circle cx="24.5" cy="32" r="13.5" fill="none" stroke="${Gp}" stroke-width="5"/><circle cx="39.5" cy="32" r="13.5" fill="none" stroke="${Gp}" stroke-width="5"/>`,
+    seal: TILE+`<circle cx="32" cy="32" r="22" fill="none" stroke="${Gp}" stroke-width="2.6"/><circle cx="32" cy="32" r="15.5" fill="${Gp}"/><g stroke="${Kt}" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M25 35.5 L32 28 L39 35.5"/><path d="M32 28 V39.5"/></g>`,
+    prism: TILE+`<path d="M32 11 L53 47 H11 Z" fill="${Gp}"/><g stroke="${Kt}" stroke-opacity=".5" stroke-width="1.4" fill="none" stroke-linejoin="round"><path d="M32 11 V47"/><path d="M32 47 L20 30"/><path d="M32 47 L44 30"/><path d="M20 30 H44"/></g>`,
+    compass: TILE+`<circle cx="32" cy="32" r="21" fill="none" stroke="${Gp}" stroke-width="2.6"/><path d="M32 14 L35.5 28.5 L50 32 L35.5 35.5 L32 50 L28.5 35.5 L14 32 L28.5 28.5 Z" fill="${Gp}"/>`,
+    stack: TILE+`<path d="M32 12 L51 22 L32 32 L13 22 Z" fill="${Gp}"/><path d="M13 30.5 L32 40.5 L51 30.5" fill="none" stroke="${Gp}" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M13 39 L32 49 L51 39" fill="none" stroke="${Gp}" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/>`,
+    embrace: TILE+`<path d="M40 13 A20 20 0 1 0 40 51 A15.5 15.5 0 1 1 40 13 Z" fill="${Gp}"/><circle cx="30" cy="32" r="6.6" fill="${Gp}"/>`,
+    plane: TILE+`<path d="M51 13 L13 30 L29 35 L34 51 Z" fill="${Gp}"/><path d="M29 35 L51 13" stroke="${Kt}" stroke-opacity=".45" stroke-width="1.6"/>`,
+  };
+
+  function svg(size,key){ return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">${E[key]}</svg>`; }
+
+  const groups = [
+    { title:'1 · Marketplace & Shopping', items:[
+      ['tag','Price Tag'],['tagk','Branded Tag (K)'],['verifiedtag','Verified Tag'],['bag','Shopping Bag'],['bagk','Bag + K'],
+      ['bagchat','Bag + Chat'],['verifiedbag','Verified Bag'],['communitybag','Community Bag'],['risingbag','Rising Bag'],
+      ['cart','Smart Cart'],['store','Storefront'],['awningm','Market Awning (M)'] ]},
+    { title:'2 · Letters & Symbols', items:[
+      ['monoK','K Monogram'],['km','KM Monogram'],['crown','Crown'],['bolt','Bolt'],['growthk','Rising K'] ]},
+    { title:'3 · Place & Community', items:[
+      ['pin','Location Pin'],['pinhome','Pin + Home'],['chat','Chat Bubble'],['hub','The Hub'],['constellation','Constellation'],
+      ['linked','Linked'],['bridge','The Bridge'],['deal','The Deal'],['hexagon','Hexagon'],['heart','Heart'] ]},
+    { title:'4 · Abstract & Motion', items:[
+      ['swap','Swap Arrows'],['loop','Exchange Loop'],['infinity','Infinity'],['pulse','Local Pulse'],['spark','Spark'] ]},
+    { title:'5 · Premium Flagships (gold-on-black finish)', items:[
+      ['gather','Gather'],['apex','Apex (Gem)'],['bloom','Bloom (Petals)'],['orbit','Orbit'],['aperture','Aperture'],
+      ['ascend','Ascend'],['union','Union'],['seal','Seal'],['prism','Prism'],['compass','Compass'],['stack','Stack'],
+      ['embrace','Embrace'],['plane','Send / Plane'] ]},
+  ];
+
+  const root = document.getElementById('root');
+  let n = 0, total = 0;
+  groups.forEach(g => {
+    let cards = '';
+    g.items.forEach(([key,name]) => {
+      n++; total++;
+      cards += `
+        <div class="card">
+          <div class="num">${n}</div>
+          <div class="marks">${svg(64,key)}${svg(22,key)}</div>
+          <div class="nm">${name}</div>
+        </div>`;
+    });
+    root.insertAdjacentHTML('beforeend', `<div class="section"><div class="sec-title">${g.title}</div></div><div class="grid">${cards}</div>`);
+  });
+  document.getElementById('count').textContent = total + ' LOGO CONCEPTS';
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — Logo Options (Black & Gold)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Syne', system-ui, sans-serif; background: #0A0A0A; color: #F5F0E8; padding: 48px 24px 80px; }
+  h1 { font-size: 28px; text-align: center; margin-bottom: 6px; }
+  .sub { text-align: center; opacity: .5; font-size: 14px; margin-bottom: 40px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 22px; max-width: 1080px; margin: 0 auto; }
+  .card { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; overflow: hidden; background: #141414; }
+  .name { padding: 14px 18px; font-size: 14px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center;}
+  .desc { font-size: 11px; opacity:.5; font-weight:400; }
+  .scene { padding: 30px 24px; display: flex; align-items: center; gap: 18px; }
+  .scene.light { background: #F5F0E8; }
+  .lockup { display: flex; align-items: center; gap: 13px; }
+  .word { font-weight: 800; font-size: 25px; letter-spacing: -1px; white-space: nowrap; }
+  .scene .word .k { color: #F5F0E8; }
+  .scene.light .word .k { color: #0A0A0A; }
+  .word .m { color: #FFC904; }
+  .sizes { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <h1>KnightMarket — Logo Options</h1>
+  <div class="sub">Black &amp; gold · big = logo, small = favicon size · top row dark, bottom row light. Pick a number.</div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  // each icon returns the inner SVG content (dark icon on gold badge), 64x64 box
+  const icons = {
+    tag: `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>
+      <path d="M34 13 L52 13 C53.7 13 55 14.3 55 16 L55 34 C55 34.8 54.7 35.6 54.1 36.2 L36.2 54.1 C34.6 55.7 32 55.7 30.4 54.1 L13.9 37.6 C12.3 36 12.3 33.4 13.9 31.8 L31.8 13.9 C32.4 13.3 33.2 13 34 13 Z" fill="#0A0A0A"/>
+      <circle cx="45" cy="23" r="3.6" fill="#FFC904"/>`,
+    bag: `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>
+      <path d="M19 25 H45 L46.5 51 C46.6 52.1 45.7 53 44.5 53 H19.5 C18.3 53 17.4 52.1 17.5 51 Z" fill="#0A0A0A"/>
+      <path d="M26 25 V20 C26 16.1 28.7 13 32 13 C35.3 13 38 16.1 38 20 V25" stroke="#0A0A0A" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+    swap: `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>
+      <g stroke="#0A0A0A" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 26 H46"/><path d="M39 19 L47 26 L39 33"/>
+        <path d="M48 38 H18"/><path d="M25 31 L17 38 L25 45"/>
+      </g>`,
+    mono: `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>
+      <text x="32" y="45" text-anchor="middle" font-family="Syne, sans-serif" font-weight="900" font-size="38" fill="#0A0A0A">K</text>`,
+  };
+
+  function mark(size, key){ return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">${icons[key]}</svg>`; }
+
+  const opts = [
+    { n:'1 — Price Tag', d:'classic marketplace / buy-sell', key:'tag' },
+    { n:'2 — Shopping Bag', d:'commerce, friendly, retail', key:'bag' },
+    { n:'3 — Swap Arrows', d:'exchange / trade between students', key:'swap' },
+    { n:'4 — K Monogram', d:'cleanest & safest lettermark', key:'mono' },
+  ];
+
+  const grid = document.getElementById('grid');
+  opts.forEach(o => {
+    const scene = (cls) => `
+      <div class="scene ${cls}">
+        <div class="lockup">${mark(44,o.key)}<span class="word"><span class="k">Knight</span><span class="m">Market</span></span></div>
+        <div class="sizes">${mark(28,o.key)}${mark(16,o.key)}</div>
+      </div>`;
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="name"><span>${o.n}</span><span class="desc">${o.d}</span></div>
+        ${scene('')}
+        ${scene('light')}
+      </div>`);
+  });
+</script>
+</body>
+</html>

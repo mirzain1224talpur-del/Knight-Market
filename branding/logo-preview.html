@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — Logo Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Syne', system-ui, sans-serif;
+    background: #15161a;
+    color: #e8e6e3;
+    padding: 48px 24px 80px;
+  }
+  h1 { font-size: 28px; text-align: center; margin-bottom: 6px; }
+  .sub { text-align: center; opacity: .55; font-size: 14px; margin-bottom: 40px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1d1f24;
+  }
+  .card-head {
+    padding: 14px 18px;
+    font-size: 13px;
+    letter-spacing: .3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .swatches { display: flex; gap: 6px; }
+  .sw { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,.15); }
+  .tag { font-size: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,.08); opacity:.7; }
+  .tag.warn { background: rgba(229,72,77,.18); color:#ff9a9d; opacity:1; }
+  /* the two backgrounds each option is shown on */
+  .scene { padding: 30px 24px; display: flex; align-items: center; gap: 22px; }
+  .scene.dark  { background: var(--ink); }
+  .scene.light { background: var(--paper); }
+  .lockup { display: flex; align-items: center; gap: 14px; }
+  .word { font-weight: 800; font-size: 26px; letter-spacing: -1px; white-space: nowrap; }
+  .scene.dark  .word .k { color: var(--paper); }
+  .scene.light .word .k { color: var(--ink); }
+  .word .m { color: var(--accent); }
+  .sizes { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .sizes svg { display:block; }
+  .fav-note { font-size: 10px; opacity:.5; text-align:center; }
+  .badge-name { font-weight: 800; }
+</style>
+</head>
+<body>
+  <h1>KnightMarket — Chess Knight Logo</h1>
+  <div class="sub">Same icon, four palettes · shown on dark + light · big = logo, small = favicon. Pick one and tell me the name.</div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  // The chess-knight icon. {A}=accent (badge), {I}=ink (knight + dark bg), {P}=paper.
+  function mark(size, accent, ink) {
+    return `
+    <svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="60" height="60" rx="16" fill="${accent}"/>
+      <path d="M21 51 L44 51 L44 47 C44 43 42 40 39 38 C43 36 47 32 48 27 C50 21 48 15 43 12 C40 10 36 10 33 12 L32 7 L28 11 C24 10 20 12 17 16 C15 19 14 23 15 27 L12 29 L17 31 C18 31 19 30 20 29 C21 32 23 34 25 35 C23 38 22 41 22 44 L19 46 C19 46 19 49 21 51 Z" fill="${ink}"/>
+      <circle cx="34" cy="20" r="1.8" fill="${accent}"/>
+    </svg>`;
+  }
+
+  const palettes = [
+    { name: 'Royal Violet', accent: '#7C5CFF', ink: '#0E0B1A', paper: '#F4F1FF', tag: 'recommended' },
+    { name: 'Market Emerald', accent: '#2BB673', ink: '#07140E', paper: '#EAF7F0', tag: '' },
+    { name: 'Crimson Steel', accent: '#E5484D', ink: '#14161A', paper: '#F5F0EC', tag: '' },
+    { name: 'Classic Gold', accent: '#FFC904', ink: '#0A0A0A', paper: '#F5F0E8', tag: 'close to UCF colors' },
+  ];
+
+  const grid = document.getElementById('grid');
+  palettes.forEach(p => {
+    const lock = (scene) => `
+      <div class="scene ${scene}" style="--accent:${p.accent};--ink:${p.ink};--paper:${p.paper}">
+        <div class="lockup">
+          ${mark(44, p.accent, p.ink)}
+          <span class="word"><span class="k">Knight</span><span class="m">Market</span></span>
+        </div>
+        <div class="sizes">
+          ${mark(28, p.accent, p.ink)}
+          ${mark(16, p.accent, p.ink)}
+        </div>
+      </div>`;
+    const tagHtml = p.tag
+      ? `<span class="tag ${p.tag.includes('UCF') ? 'warn' : ''}">${p.tag}</span>`
+      : '';
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="card-head">
+          <span class="badge-name">${p.name}</span>
+          <span class="swatches">
+            <span class="sw" style="background:${p.accent}"></span>
+            <span class="sw" style="background:${p.ink}"></span>
+            <span class="sw" style="background:${p.paper}"></span>
+            ${tagHtml}
+          </span>
+        </div>
+        ${lock('dark')}
+        ${lock('light')}
+      </div>`);
+  });
+</script>
+</body>
+</html>

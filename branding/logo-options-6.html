@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnightMarket — Marketplace Marks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Syne', system-ui, sans-serif; background: #0A0A0A; color: #F5F0E8; padding: 48px 24px 90px; }
+  h1 { font-size: 28px; text-align: center; margin-bottom: 6px; }
+  .sub { text-align: center; opacity: .55; font-size: 14px; margin: 0 auto 40px; max-width:680px; line-height:1.5; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 22px; max-width: 1120px; margin: 0 auto; }
+  .card { border: 1px solid rgba(255,255,255,.1); border-radius: 18px; overflow: hidden; background: #141414; }
+  .name { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .name b { font-size: 14.5px; font-weight: 800; }
+  .desc { font-size: 11.5px; opacity:.55; font-weight:400; margin-top:3px; line-height:1.45; }
+  .scene { padding: 26px 24px; display: flex; align-items: center; gap: 16px; }
+  .scene.light { background: #F5F0E8; border-top:1px solid rgba(255,255,255,.06); }
+  .lockup { display: flex; align-items: center; gap: 13px; }
+  .word { font-weight: 800; font-size: 23px; letter-spacing: -1px; white-space: nowrap; }
+  .scene .word .k { color: #F5F0E8; } .scene.light .word .k { color: #0A0A0A; }
+  .word .m { color: #FFC904; }
+  .alt { font-weight: 800; font-size: 21px; letter-spacing:-.5px; opacity:.85; }
+  .scene .alt { color:#F5F0E8; } .scene.light .alt { color:#0A0A0A; }
+  .tagline { font-size:10px; opacity:.4; margin-left:auto; text-align:right; max-width:120px; line-height:1.3;}
+  .sizes { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <h1>KnightMarket — Marketplace Marks</h1>
+  <div class="sub">Options 29–34, inspired by clean shop/bag/cart logos — but original. Black &amp; gold, no letters/knight/UCF, so they still survive a rename (shown with a different name on the light row).</div>
+  <div class="grid" id="grid"></div>
+
+<script>
+  const badge = `<rect x="2" y="2" width="60" height="60" rx="16" fill="#FFC904"/>`;
+  const D = '#0A0A0A', G = '#FFC904';
+  const bagBody = `M17 24 H47 L48.5 49.5 a3.5 3.5 0 0 1 -3.5 3.7 H19 a3.5 3.5 0 0 1 -3.5 -3.7 Z`;
+  const bagHandle = `M25 24 V19.5 C25 15.4 28.1 12 32 12 C35.9 12 39 15.4 39 19.5 V24`;
+
+  const icons = {
+    // 29 — shopping bag that's also a speech bubble = buy + chat/deal
+    bagchat: badge + `
+      <path d="M16 27 a6 6 0 0 1 6 -6 H42 a6 6 0 0 1 6 6 V43 a6 6 0 0 1 -6 6 H28 L20 55 V49 H22 a6 6 0 0 1 -6 -6 Z" fill="${D}"/>
+      <path d="M25.5 21 V18.5 a6.5 6.5 0 0 1 13 0 V21" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="32" cy="35" r="3" fill="${G}"/><circle cx="23" cy="35" r="3" fill="${G}"/><circle cx="41" cy="35" r="3" fill="${G}"/>`,
+
+    // 30 — clean modern shopping cart
+    cart: badge + `
+      <g stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 16 H19 L23.5 39 H44 L48.5 23 H21.5"/>
+      </g>
+      <circle cx="25" cy="47" r="3.6" fill="${D}"/><circle cx="42" cy="47" r="3.6" fill="${D}"/>`,
+
+    // 31 — verified bag = trusted marketplace
+    verifiedbag: badge + `
+      <path d="${bagBody}" fill="${D}"/>
+      <path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M25 38 L30.5 43.5 L41 30" stroke="${G}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+
+    // 32 — bag filled with a connected network of dots = marketplace + community/campuses (the hero)
+    communitybag: badge + `
+      <path d="${bagBody}" fill="${D}"/>
+      <path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g stroke="${G}" stroke-width="1.8">
+        <line x1="25" y1="35" x2="38" y2="32"/><line x1="38" y1="32" x2="40" y2="44"/>
+        <line x1="40" y1="44" x2="27" y2="46"/><line x1="27" y1="46" x2="25" y2="35"/>
+      </g>
+      <circle cx="25" cy="35" r="2.6" fill="${G}"/><circle cx="38" cy="32" r="2.6" fill="${G}"/>
+      <circle cx="40" cy="44" r="2.6" fill="${G}"/><circle cx="27" cy="46" r="2.6" fill="${G}"/>`,
+
+    // 33 — clean storefront
+    store: badge + `
+      <rect x="17" y="32" width="30" height="21" rx="2" fill="${D}"/>
+      <rect x="28" y="40" width="8" height="13" rx="1" fill="${G}"/>
+      <path d="M13 20 H51 L48.5 31 H15.5 Z" fill="${D}"/>
+      <rect x="13" y="20" width="38" height="4.5" rx="1" fill="${D}"/>`,
+
+    // 34 — bag with an up-arrow inside = commerce on the rise
+    risingbag: badge + `
+      <path d="${bagBody}" fill="${D}"/>
+      <path d="${bagHandle}" stroke="${D}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g stroke="${G}" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 46 V33"/><path d="M26 39 L32 32 L38 39"/>
+      </g>`,
+  };
+
+  function mark(size, key){ return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">${icons[key]}</svg>`; }
+
+  const opts = [
+    { n:'29 — Bag + Chat', d:'a shopping bag that doubles as a speech bubble — buy, message, deal. Clever and modern.', key:'bagchat', alt:'Dealio' },
+    { n:'30 — Smart Cart', d:'a clean, minimal cart — the universal "shop" symbol, done sharply.', key:'cart', alt:'Cartly' },
+    { n:'31 — Verified Bag', d:'a bag with a check — your trust/verification pitch, in the bag everyone recognizes.', key:'verifiedbag', alt:'Trusty' },
+    { n:'32 — Community Bag ★', d:'a bag holding a little network of dots = a marketplace + a growing community of campuses. Best of both briefs.', key:'communitybag', alt:'CampusKart' },
+    { n:'33 — Storefront', d:'a tidy little shop with an awning — friendly, local, instantly "a market."', key:'store', alt:'Stalls' },
+    { n:'34 — Rising Bag', d:'a bag with an up-arrow — a marketplace on the rise, momentum.', key:'risingbag', alt:'Upmarket' },
+  ];
+
+  const grid = document.getElementById('grid');
+  opts.forEach(o => {
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="name"><b>${o.n}</b><div class="desc">${o.d}</div></div>
+        <div class="scene">
+          <div class="lockup">${mark(44,o.key)}<span class="word"><span class="k">Knight</span><span class="m">Market</span></span></div>
+          <div class="sizes">${mark(28,o.key)}${mark(16,o.key)}</div>
+        </div>
+        <div class="scene light">
+          <div class="lockup">${mark(40,o.key)}<span class="alt">${o.alt}</span></div>
+          <div class="tagline">↑ same mark,<br>any name</div>
+        </div>
+      </div>`);
+  });
+</script>
+</body>
+</html>
