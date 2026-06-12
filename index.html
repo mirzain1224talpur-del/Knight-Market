@@ -237,15 +237,20 @@
     .km-promise p b { color: var(--gold-bright); font-weight: 600; }
 
     /* PAGE ROUTING (toolbar navigation) */
-    [data-page] { display: none; }
-    [data-page].km-on { display: block; }
+    /* SINGLE-PAGE SCROLL — every section visible & stacked; toolbar jumps between them.
+       Visual order is set here so the markup can stay untouched. */
+    .km-flow { display: flex; flex-direction: column; }
+    [data-page] { scroll-margin-top: 88px; }   /* so anchor jumps clear the sticky nav */
+    .km-hero     { order: 0; }
+    .km-mission  { order: 1; }
+    .km-how      { order: 2; }
+    .km-features { order: 3; }
+    .km-safety   { order: 4; }
+    .km-trust    { order: 5; }
+    .km-alumni   { order: 6; }
+    .km-stats    { order: 7; }
+    .km-waitlist { order: 8; }
     .km-divider { display: none; }
-    /* Non-home pages fill the viewport and center their content (no empty space underneath) */
-    [data-page]:not([data-page="home"]).km-on {
-      display: flex; flex-direction: column; justify-content: center;
-      min-height: calc(100vh - 140px);
-      min-height: calc(100dvh - 140px);
-    }
 
     /* TOOLBAR NAV — logo left · links centered · Join right (elegant Outfit) */
     .km-nav { display: flex; align-items: center; gap: 1rem; }
@@ -304,20 +309,22 @@
       <span class="km-word">Knight<b>Market</b></span>
     </a>
     <div class="km-navlinks" id="navlinks">
-      <a class="km-navlink" data-go="mission" href="#mission">Mission</a>
-      <a class="km-navlink" data-go="trust" href="#trust">Trust</a>
-      <a class="km-navlink" data-go="safety" href="#safety">Safety</a>
-      <a class="km-navlink" data-go="features" href="#features">Features</a>
-      <a class="km-navlink" data-go="how" href="#how">How it works</a>
-      <a class="km-navlink" data-go="alumni" href="#alumni">Alumni</a>
-      <a class="km-navlink" data-go="opportunity" href="#opportunity">Opportunity</a>
+      <a class="km-navlink" href="#mission">Mission</a>
+      <a class="km-navlink" href="#how">How it works</a>
+      <a class="km-navlink" href="#features">Features</a>
+      <a class="km-navlink" href="#safety">Safety</a>
+      <a class="km-navlink" href="#trust">Trust</a>
+      <a class="km-navlink" href="#alumni">Alumni</a>
+      <a class="km-navlink" href="#opportunity">Opportunity</a>
     </div>
     <a class="km-nav-cta" data-go="waitlist" href="#waitlist">Join waitlist</a>
     <button class="km-burger" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
   </nav>
 
+  <main class="km-flow">
+
   <!-- HERO -->
-  <section class="km-hero km-on" data-page="home">
+  <section class="km-hero" id="home" data-page="home">
     <div class="km-hero-glow"></div>
     <div class="km-ucf-pill reveal">
       <div class="km-ucf-dot"></div>
@@ -341,7 +348,7 @@
   <div class="km-divider"></div>
 
   <!-- MISSION -->
-  <section class="km-mission" data-page="mission">
+  <section class="km-mission" id="mission" data-page="mission">
     <p class="km-section-label reveal">Our mission</p>
     <p class="km-mission-text reveal" style="--d:1">KnightMarket's mission is to create a <em>trusted, student-only marketplace</em> where verified UCF students can safely buy, sell, sublease, find roommates, and connect <span>with confidence.</span></p>
   </section>
@@ -349,7 +356,7 @@
   <div class="km-divider"></div>
 
   <!-- TRUST -->
-  <section class="km-trust" data-page="trust">
+  <section class="km-trust" id="trust" data-page="trust">
     <p class="km-section-label reveal">Trust & identity</p>
     <h2 class="km-section-title reveal" style="--d:1">Know exactly who you're dealing with</h2>
     <div class="km-trust-layout">
@@ -412,7 +419,7 @@
   <div class="km-divider"></div>
 
   <!-- ALUMNI -->
-  <section class="km-alumni" data-page="alumni">
+  <section class="km-alumni" id="alumni" data-page="alumni">
     <div class="km-alumni-inner">
       <p class="km-section-label reveal" style="text-align:center">After graduation</p>
       <h2 class="km-section-title reveal" style="--d:1">Knights for life</h2>
@@ -449,7 +456,7 @@
   <div class="km-divider"></div>
 
   <!-- FEATURES -->
-  <section class="km-features" data-page="features">
+  <section class="km-features" id="features" data-page="features">
     <p class="km-section-label reveal">What you can do</p>
     <h2 class="km-section-title reveal" style="--d:1">Everything a Knight needs</h2>
     <div class="km-cards">
@@ -465,7 +472,7 @@
   <div class="km-divider"></div>
 
   <!-- HOW IT WORKS -->
-  <section class="km-how" data-page="how">
+  <section class="km-how" id="how" data-page="how">
     <div class="km-how-inner">
       <p class="km-section-label reveal" style="text-align:center">How it works</p>
       <h2 class="km-section-title reveal" style="--d:1">List in under 2 minutes</h2>
@@ -481,7 +488,7 @@
   <div class="km-divider"></div>
 
   <!-- STATS -->
-  <section class="km-stats" data-page="opportunity">
+  <section class="km-stats" id="opportunity" data-page="opportunity">
     <p class="km-section-label reveal" style="text-align:center">The opportunity</p>
     <h2 class="km-section-title reveal" style="--d:1;margin-bottom:2rem">Built for the 2nd largest university in the US</h2>
     <div class="km-stats-grid">
@@ -495,7 +502,7 @@
   <div class="km-divider"></div>
 
   <!-- WHY STUDENTS TRUST / SAFETY -->
-  <section class="km-safety" data-page="safety">
+  <section class="km-safety" id="safety" data-page="safety">
     <p class="km-section-label reveal">Safety &amp; protection</p>
     <h2 class="km-section-title reveal" style="--d:1">Why students trust KnightMarket</h2>
 
@@ -591,7 +598,7 @@
   <div class="km-divider"></div>
 
   <!-- WAITLIST -->
-  <section class="km-waitlist" data-page="waitlist">
+  <section class="km-waitlist" id="waitlist" data-page="waitlist">
     <h2 class="reveal">Be a founding Knight</h2>
     <p class="reveal" style="--d:1">Join the waitlist and get early access before anyone else. Free forever for early members.</p>
     <form name="waitlist" class="reveal" style="--d:2" onsubmit="return handleWaitlist(event)">
@@ -604,31 +611,42 @@
     <p class="success-msg" id="successMsg">⚔️ You're on the list! We'll hit you when we launch.</p>
   </section>
 
+  </main>
+
   <footer class="km-footer">
     © 2026 KnightMarket · For UCF students, by UCF students · Not affiliated with the University of Central Florida
   </footer>
 
-  <!-- Toolbar routing: kept in its own script so navigation never depends on any external CDN -->
+  <!-- Single-page scroll: toolbar links jump to sections; scrollspy lights up the active one -->
   <script>
     (function () {
-      const PAGES = ['home', 'mission', 'trust', 'safety', 'features', 'how', 'alumni', 'opportunity', 'waitlist'];
       const navlinks = document.getElementById('navlinks');
-      function showPage(name) {
-        if (!PAGES.includes(name)) name = 'home';
-        document.querySelectorAll('[data-page]').forEach(el => {
-          const on = el.getAttribute('data-page') === name;
-          el.classList.toggle('km-on', on);
-          if (on) el.querySelectorAll('.reveal').forEach(r => r.classList.add('in'));
-        });
-        document.querySelectorAll('.km-navlink').forEach(a => a.classList.toggle('active', a.getAttribute('data-go') === name));
-        if (navlinks) navlinks.classList.remove('open');
-        window.scrollTo(0, 0);
-      }
-      const current = () => location.hash.replace('#', '') || 'home';
-      window.addEventListener('hashchange', () => showPage(current()));
+      const links = Array.from(document.querySelectorAll('.km-navlink'));
       const burger = document.querySelector('.km-burger');
+
+      // Mobile menu: toggle open + auto-close once a destination is picked
       if (burger) burger.addEventListener('click', () => navlinks.classList.toggle('open'));
-      showPage(current());
+      links.forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+      const cta = document.querySelector('.km-nav-cta');
+      if (cta) cta.addEventListener('click', () => navlinks.classList.remove('open'));
+
+      // Scrollspy: highlight whichever section is centered in the viewport
+      const byId = {};
+      links.forEach(a => { byId[a.getAttribute('href').slice(1)] = a; });
+      const sections = links
+        .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+        .filter(Boolean);
+      if ('IntersectionObserver' in window && sections.length) {
+        const spy = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            links.forEach(l => l.classList.remove('active'));
+            const active = byId[e.target.id];
+            if (active) active.classList.add('active');
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+        sections.forEach(s => spy.observe(s));
+      }
     })();
   </script>
 
