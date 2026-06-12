@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="256x256" href="branding/favicon-256.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="branding/app-icon-180.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <style>
     :root {
@@ -59,7 +59,7 @@
     .km-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 2rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: rgba(8,8,10,0.78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 100; }
     .km-logo { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
     .km-logo .km-mark { display: block; height: 32px; width: auto; filter: drop-shadow(0 0 14px rgba(240,185,44,0.35)); }
-    .km-logo .km-word { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -1px; line-height: 1; color: var(--text); }
+    .km-logo .km-word { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -1px; line-height: 1; color: var(--text); }
     .km-logo .km-word b { font-weight: 800; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .km-badge { font-size: 11px; font-weight: 500; background: rgba(240,185,44,0.10); color: var(--gold-bright); border: 0.5px solid var(--gold-line); padding: 5px 12px; border-radius: 20px; letter-spacing: 0.3px; }
 
@@ -69,8 +69,8 @@
     .km-ucf-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; background: rgba(240,185,44,0.08); color: var(--gold-bright); border: 0.5px solid var(--gold-line); padding: 7px 15px; border-radius: 20px; margin-bottom: 2rem; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 0 0 1px rgba(240,185,44,0.04), 0 8px 24px rgba(240,185,44,0.07); }
     .km-ucf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.35; transform:scale(0.8)} }
-    .km-h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(44px, 8vw, 76px); line-height: 1.0; letter-spacing: -2.5px; margin-bottom: 1.5rem; }
-    .km-h1 em { font-style: normal; background: var(--gold-sheen); background-size: 220% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: shine 6s linear infinite; filter: drop-shadow(0 3px 22px rgba(240,185,44,0.28)); }
+    .km-h1 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: clamp(46px, 8vw, 82px); line-height: 1.04; letter-spacing: -1.5px; margin-bottom: 1.5rem; }
+    .km-h1 em { font-style: normal; font-weight: 600; background: var(--gold-sheen); background-size: 220% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: shine 6s linear infinite; filter: drop-shadow(0 3px 22px rgba(240,185,44,0.28)); }
     @keyframes shine { to { background-position: 220% center; } }
     .km-subtitle { font-size: 19px; font-weight: 400; color: var(--text-dim); line-height: 1.6; max-width: 600px; margin: 0 auto 1.1rem; }
     .km-subtitle-2 { font-size: 15.5px; font-weight: 400; color: var(--text-faint); line-height: 1.6; max-width: 540px; margin: 0 auto 2.5rem; }
@@ -83,12 +83,20 @@
     .km-btn-secondary { background: rgba(255,255,255,0.03); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 14px 28px; border-radius: 10px; border: 0.5px solid rgba(255,255,255,0.16); cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
     .km-btn-secondary:hover { border-color: var(--gold-line); background: rgba(240,185,44,0.06); transform: translateY(-2px); }
 
+    /* HERO inline signup (conversion) */
+    .km-hero-signup { max-width: 470px; margin: 2.4rem auto 0; }
+    .km-hero-success { margin-top: 14px; }
+    .km-hero-note { font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--text-faint); margin-top: 16px; letter-spacing: 0.2px; }
+    .km-hero-note b { color: var(--gold-bright); font-weight: 600; }
+    .km-hero-learn { display: inline-block; margin-top: 20px; background: none; border: 0; color: var(--text-dim); font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+    .km-hero-learn:hover { color: var(--gold-bright); }
+
     /* DIVIDER */
     .km-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 0 2rem; }
 
     /* SHARED SECTION HEADERS */
     .km-section-label { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 0.9rem; text-align: center; }
-    .km-section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(26px, 5vw, 34px); letter-spacing: -1px; text-align: center; color: var(--text); margin-bottom: 3rem; }
+    .km-section-title { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: clamp(28px, 5vw, 38px); letter-spacing: -0.5px; text-align: center; color: var(--text); margin-bottom: 3rem; }
 
     /* TRUST */
     .km-trust { padding: 4.5rem 2rem; max-width: 960px; margin: 0 auto; }
@@ -99,8 +107,8 @@
     .km-profile-card { background: linear-gradient(180deg, #16161A 0%, #0E0E11 100%); border: 0.5px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 1.85rem; position: relative; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
     .km-profile-card::before { content:''; position:absolute; top:0; right:0; width:160px; height:160px; background: radial-gradient(circle at top right, rgba(240,185,44,0.12), transparent 70%); }
     .km-profile-top { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; position: relative; }
-    .km-avatar { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #FFD75E 0%, #F0B92C 45%, #DD8A0E 100%); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: #1A1206; flex-shrink: 0; box-shadow: 0 6px 18px rgba(240,185,44,0.28); }
-    .km-profile-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 3px; }
+    .km-avatar { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #FFD75E 0%, #F0B92C 45%, #DD8A0E 100%); display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 18px; color: #1A1206; flex-shrink: 0; box-shadow: 0 6px 18px rgba(240,185,44,0.28); }
+    .km-profile-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 3px; }
     .km-profile-sub { font-size: 13px; color: var(--text-faint); }
     .km-verified-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(240,185,44,0.10); border: 0.5px solid var(--gold-line); color: var(--gold-bright); font-size: 11px; font-weight: 500; padding: 5px 11px; border-radius: 20px; margin-bottom: 1rem; }
     .km-profile-fields { display: flex; flex-direction: column; gap: 10px; }
@@ -120,7 +128,7 @@
     .km-trust-icon.gold { background: linear-gradient(135deg, rgba(240,185,44,0.20), rgba(240,185,44,0.06)); color: var(--gold-bright); border: 0.5px solid rgba(240,185,44,0.22); }
     .km-trust-icon.blue { background: rgba(55,138,221,0.12); color: #5AA9FF; border: 0.5px solid rgba(55,138,221,0.22); }
     .km-trust-icon.green { background: rgba(52,199,123,0.12); color: #34C77B; border: 0.5px solid rgba(52,199,123,0.22); }
-    .km-trust-text h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+    .km-trust-text h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
     .km-trust-text p { font-size: 13px; color: var(--text-faint); line-height: 1.55; }
 
     /* ALUMNI */
@@ -132,7 +140,7 @@
     .km-alumni-opt:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
     .km-alumni-opt.recommended { border-color: var(--gold-line); box-shadow: 0 0 0 1px rgba(240,185,44,0.10), 0 18px 48px rgba(240,185,44,0.08); }
     .km-rec-tag { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #FFD75E, #E9A91C); color: #1A1206; font-size: 10px; font-weight: 600; padding: 4px 13px; border-radius: 20px; white-space: nowrap; box-shadow: 0 4px 14px rgba(240,185,44,0.3); }
-    .km-alumni-opt h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 0.5rem; }
+    .km-alumni-opt h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 0.5rem; }
     .km-alumni-opt p { font-size: 13px; color: var(--text-faint); line-height: 1.55; margin-bottom: 1rem; }
     .km-alumni-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; }
     .km-alumni-badge.student { background: rgba(240,185,44,0.10); color: var(--gold-bright); border: 0.5px solid var(--gold-line); }
@@ -147,7 +155,7 @@
     .km-card { background: linear-gradient(180deg, #151518 0%, #0E0E11 100%); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.85rem; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
     .km-card:hover { border-color: var(--gold-line); transform: translateY(-5px); box-shadow: 0 20px 46px rgba(0,0,0,0.5); }
     .km-card-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(240,185,44,0.20), rgba(240,185,44,0.05)); border: 0.5px solid rgba(240,185,44,0.22); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; font-size: 20px; color: var(--gold-bright); }
-    .km-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 0.5rem; }
+    .km-card h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 17px; color: var(--text); margin-bottom: 0.5rem; }
     .km-card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
     .km-card-accent { position: absolute; top: 0; right: 0; width: 110px; height: 110px; background: radial-gradient(circle at top right, rgba(240,185,44,0.09), transparent 70%); pointer-events: none; }
 
@@ -157,8 +165,8 @@
     .km-steps { display: flex; flex-direction: column; margin-top: 2rem; }
     .km-step { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.6rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); }
     .km-step:last-child { border-bottom: none; }
-    .km-step-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 38px; line-height: 1; min-width: 52px; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.85; }
-    .km-step-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); margin-bottom: 0.4rem; }
+    .km-step-num { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 38px; line-height: 1; min-width: 52px; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.85; }
+    .km-step-content h4 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); margin-bottom: 0.4rem; }
     .km-step-content p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
 
     /* STATS */
@@ -166,13 +174,13 @@
     .km-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
     .km-stat-card { background: linear-gradient(180deg, #151518 0%, #0E0E11 100%); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1.7rem 1.5rem; text-align: center; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
     .km-stat-card:hover { transform: translateY(-4px); border-color: var(--gold-line); box-shadow: 0 16px 40px rgba(0,0,0,0.45); }
-    .km-stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -1.5px; display: block; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 14px rgba(240,185,44,0.18)); }
+    .km-stat-num { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 42px; letter-spacing: -1px; display: block; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 14px rgba(240,185,44,0.18)); }
     .km-stat-label { font-size: 13px; color: var(--text-faint); margin-top: 6px; display: block; }
 
     /* WAITLIST */
     .km-waitlist { position: relative; padding: 5rem 2rem 5.5rem; max-width: 580px; margin: 0 auto; text-align: center; overflow: hidden; }
     .km-waitlist::before { content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 520px; max-width: 100vw; height: 320px; background: radial-gradient(ellipse at center, rgba(240,185,44,0.10), transparent 65%); filter: blur(14px); pointer-events: none; z-index: -1; }
-    .km-waitlist h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px, 6vw, 36px); letter-spacing: -1.2px; color: var(--text); margin-bottom: 0.75rem; }
+    .km-waitlist h2 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(28px, 6vw, 36px); letter-spacing: -1.2px; color: var(--text); margin-bottom: 0.75rem; }
     .km-waitlist > p { font-size: 15px; color: var(--text-dim); margin-bottom: 2rem; line-height: 1.6; }
     .km-email-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
     .km-input { flex: 1; min-width: 220px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.14); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 14px 16px; border-radius: 10px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
@@ -182,6 +190,88 @@
 
     /* FOOTER */
     .km-footer { text-align: center; padding: 1.75rem; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text-faint); }
+
+    /* MISSION */
+    .km-mission { padding: 4.5rem 2rem; max-width: 860px; margin: 0 auto; text-align: center; }
+    .km-mission-text { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: clamp(24px, 3.6vw, 38px); line-height: 1.4; letter-spacing: -0.2px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 30%, #F6E6BC 66%, #E9C77C 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+    .km-mission-text em { font-style: normal; font-weight: 600; background: none; color: var(--gold-bright); -webkit-text-fill-color: var(--gold-bright); }
+    .km-mission-text span { color: rgba(255,255,255,0.4); -webkit-text-fill-color: rgba(255,255,255,0.4); }
+
+    /* SAFETY — WHY STUDENTS TRUST */
+    .km-safety { padding: 4.5rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .km-safety-hero { display: flex; gap: 1.4rem; align-items: flex-start; background: linear-gradient(135deg, rgba(240,185,44,0.10), rgba(240,185,44,0.02)); border: 0.5px solid var(--gold-line); border-radius: 18px; padding: 2rem; margin-bottom: 16px; position: relative; overflow: hidden; }
+    .km-safety-hero::before { content: ''; position: absolute; top: 0; right: 0; width: 220px; height: 220px; background: radial-gradient(circle at top right, rgba(240,185,44,0.14), transparent 70%); pointer-events: none; }
+    .km-safety-bigicon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #FFD75E, #F0B92C 55%, #DD8A0E); color: #1A1206; display: flex; align-items: center; justify-content: center; font-size: 27px; flex-shrink: 0; box-shadow: 0 8px 22px rgba(240,185,44,0.3); position: relative; }
+    .km-safety-hero h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 19px; margin-bottom: 6px; }
+    .km-safety-hero > div p { font-size: 14px; color: var(--text-dim); line-height: 1.6; max-width: 640px; }
+    .km-safety-note { margin-top: 12px; font-size: 12.5px; font-weight: 500; color: var(--gold-bright); background: rgba(240,185,44,0.10); border: 0.5px solid var(--gold-line); border-radius: 10px; padding: 9px 13px; display: inline-flex; gap: 8px; align-items: center; }
+    .km-safety-note i { font-size: 15px; }
+    .km-safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+    .km-safety-card { background: linear-gradient(180deg, #151518 0%, #0E0E11 100%); border: 0.5px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.7rem; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+    .km-safety-card:hover { border-color: var(--gold-line); transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.5); }
+    .km-safety-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(240,185,44,0.20), rgba(240,185,44,0.05)); border: 0.5px solid rgba(240,185,44,0.22); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gold-bright); margin-bottom: 1rem; }
+    .km-safety-card h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 6px; color: var(--text); }
+    .km-safety-card > p { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; }
+    .km-safety-list { list-style: none; margin-top: 0.85rem; display: flex; flex-direction: column; gap: 8px; }
+    .km-safety-list li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+    .km-safety-list li i { color: var(--gold); font-size: 15px; margin-top: 1px; flex-shrink: 0; }
+    @media(max-width:560px){ .km-safety-hero { flex-direction: column; } }
+
+    /* OUR PROMISE */
+    .km-promise { margin-top: 2rem; text-align: center; background: linear-gradient(180deg, #141417 0%, #0E0E11 100%); border: 0.5px solid var(--gold-line); border-radius: 18px; padding: 2.5rem 2rem; position: relative; overflow: hidden; }
+    .km-promise::before { content: ''; position: absolute; inset: 0; background: radial-gradient(520px 220px at 50% 0%, rgba(240,185,44,0.09), transparent 70%); pointer-events: none; }
+    .km-promise-label { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.8rem; position: relative; }
+    .km-promise p { font-size: 15.5px; color: var(--text); line-height: 1.7; max-width: 680px; margin: 0 auto; position: relative; }
+    .km-promise p b { color: var(--gold-bright); font-weight: 600; }
+
+    /* PAGE ROUTING (toolbar navigation) */
+    [data-page] { display: none; }
+    [data-page].km-on { display: block; }
+    .km-divider { display: none; }
+    /* Non-home pages fill the viewport and center their content (no empty space underneath) */
+    [data-page]:not([data-page="home"]).km-on {
+      display: flex; flex-direction: column; justify-content: center;
+      min-height: calc(100vh - 140px);
+      min-height: calc(100dvh - 140px);
+    }
+
+    /* TOOLBAR NAV — logo left · links centered · Join right (elegant Outfit) */
+    .km-nav { display: flex; align-items: center; gap: 1rem; }
+    .km-logo { flex: none; }
+    .km-navlinks { flex: 1; display: flex; justify-content: center; align-items: center; gap: 4px; min-width: 0; }
+    .km-navlink { position: relative; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.2px;
+      text-decoration: none; padding: 9px 16px; white-space: nowrap; cursor: pointer;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4CF74 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+      opacity: 0.72; transition: opacity 0.18s ease; }
+    .km-navlink:hover { opacity: 1; }
+    .km-navlink.active { opacity: 1; font-weight: 700;
+      background: linear-gradient(180deg, #FFF6D8 0%, #F0B92C 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .km-navlink.active::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 3px; height: 2px;
+      border-radius: 2px; background: linear-gradient(90deg, transparent, var(--gold-bright), transparent); }
+    /* Join waitlist — gold button with shimmer, pinned right */
+    .km-nav-cta { flex: none; position: relative; overflow: hidden;
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: 0.2px;
+      color: #1A1206; text-decoration: none; background: linear-gradient(135deg, #FFD75E 0%, #F0B92C 52%, #DD9E11 100%);
+      padding: 10px 20px; border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(240,185,44,0.28), inset 0 1px 0 rgba(255,255,255,0.4); }
+    .km-nav-cta::after { content: ''; position: absolute; top: 0; left: -130%; width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent); transform: skewX(-20deg); transition: left 0.6s ease; }
+    .km-nav-cta:hover::after { left: 150%; }
+    .km-nav-cta:hover { filter: brightness(1.06); }
+    .km-burger { display: none; flex: none; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.12); color: var(--text); border-radius: 9px; padding: 8px 10px; font-size: 18px; line-height: 1; cursor: pointer; transition: border-color .2s; margin-left: 6px; }
+    .km-burger:hover { border-color: var(--gold-line); }
+    @media (max-width: 1200px) {
+      .km-burger { display: inline-flex; }
+      .km-nav-cta { margin-left: auto; }
+      .km-navlinks { position: absolute; left: 1rem; right: 1rem; top: calc(100% + 8px); flex: none; flex-direction: column; align-items: stretch; gap: 3px; background: rgba(12,12,14,0.985); border: 0.5px solid var(--border); border-radius: 14px; padding: 9px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 24px 60px rgba(0,0,0,0.6); display: none; }
+      .km-navlinks.open { display: flex; }
+      .km-navlink { padding: 14px 16px; font-size: 17px; text-align: center; }
+    }
+    @media (max-width: 460px) { .km-nav-cta { display: none; } }
 
     /* SCROLL REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--d, 0) * 70ms); }
@@ -199,15 +289,25 @@
   <div class="km-grain"></div>
 
   <nav class="km-nav">
-    <div class="km-logo">
+    <a class="km-logo" href="#home">
       <img class="km-mark" src="branding/ksword-gold.svg" alt="KnightMarket logo" />
       <span class="km-word">Knight<b>Market</b></span>
+    </a>
+    <div class="km-navlinks" id="navlinks">
+      <a class="km-navlink" data-go="mission" href="#mission">Mission</a>
+      <a class="km-navlink" data-go="trust" href="#trust">Trust</a>
+      <a class="km-navlink" data-go="safety" href="#safety">Safety</a>
+      <a class="km-navlink" data-go="features" href="#features">Features</a>
+      <a class="km-navlink" data-go="how" href="#how">How it works</a>
+      <a class="km-navlink" data-go="alumni" href="#alumni">Alumni</a>
+      <a class="km-navlink" data-go="opportunity" href="#opportunity">Opportunity</a>
     </div>
-    <div class="km-badge">UCF Exclusive · Coming Soon</div>
+    <a class="km-nav-cta" data-go="waitlist" href="#waitlist">Join waitlist</a>
+    <button class="km-burger" aria-label="Open menu"><i class="ti ti-menu-2"></i></button>
   </nav>
 
   <!-- HERO -->
-  <section class="km-hero">
+  <section class="km-hero km-on" data-page="home">
     <div class="km-hero-glow"></div>
     <div class="km-ucf-pill reveal">
       <div class="km-ucf-dot"></div>
@@ -216,16 +316,30 @@
     <h1 class="km-h1 reveal" style="--d:1">The super app<br>built for <em>Knights</em></h1>
     <p class="km-subtitle reveal" style="--d:2">Everything UCF students need, all in one place. Find roommates, sublease apartments, buy and sell anything, and connect with verified Knights across campus.</p>
     <p class="km-subtitle-2 reveal" style="--d:3">Sublease your place, find a roommate, buy and sell what you need — with verified Knights only. <b>No scams. No strangers. Just UCF.</b></p>
-    <div class="km-cta-group reveal" style="--d:4">
-      <button class="km-btn-primary" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join the waitlist</button>
-      <button class="km-btn-secondary" onclick="document.querySelector('.km-features').scrollIntoView({behavior:'smooth'})">Learn more ↗</button>
-    </div>
+    <form name="waitlist" class="km-hero-signup reveal" style="--d:4" onsubmit="return handleWaitlist(event)">
+      <input type="text" name="_honey" style="display:none" aria-hidden="true" tabindex="-1" autocomplete="off" />
+      <div class="km-email-row">
+        <input class="km-input" type="email" name="email" placeholder="yourname@knights.ucf.edu" required />
+        <button class="km-btn-primary" type="submit">Claim early access</button>
+      </div>
+    </form>
+    <p class="success-msg km-hero-success">You're on the list — we'll be in touch, Knight.</p>
+    <p class="km-hero-note reveal" style="--d:5">Founding members join <b>free, forever</b> &nbsp;·&nbsp; Verified <b>ucf.edu</b> only &nbsp;·&nbsp; No spam, ever.</p>
+    <button class="km-hero-learn reveal" style="--d:6" onclick="location.hash='features'">Explore what's inside ↗</button>
+  </section>
+
+  <div class="km-divider"></div>
+
+  <!-- MISSION -->
+  <section class="km-mission" data-page="mission">
+    <p class="km-section-label reveal">Our mission</p>
+    <p class="km-mission-text reveal" style="--d:1">KnightMarket's mission is to create a <em>trusted, student-only marketplace</em> where verified UCF students can safely buy, sell, sublease, find roommates, and connect <span>with confidence.</span></p>
   </section>
 
   <div class="km-divider"></div>
 
   <!-- TRUST -->
-  <section class="km-trust">
+  <section class="km-trust" data-page="trust">
     <p class="km-section-label reveal">Trust & identity</p>
     <h2 class="km-section-title reveal" style="--d:1">Know exactly who you're dealing with</h2>
     <div class="km-trust-layout">
@@ -288,7 +402,7 @@
   <div class="km-divider"></div>
 
   <!-- ALUMNI -->
-  <section class="km-alumni">
+  <section class="km-alumni" data-page="alumni">
     <div class="km-alumni-inner">
       <p class="km-section-label reveal" style="text-align:center">After graduation</p>
       <h2 class="km-section-title reveal" style="--d:1">Knights for life</h2>
@@ -325,7 +439,7 @@
   <div class="km-divider"></div>
 
   <!-- FEATURES -->
-  <section class="km-features">
+  <section class="km-features" data-page="features">
     <p class="km-section-label reveal">What you can do</p>
     <h2 class="km-section-title reveal" style="--d:1">Everything a Knight needs</h2>
     <div class="km-cards">
@@ -341,7 +455,7 @@
   <div class="km-divider"></div>
 
   <!-- HOW IT WORKS -->
-  <section class="km-how">
+  <section class="km-how" data-page="how">
     <div class="km-how-inner">
       <p class="km-section-label reveal" style="text-align:center">How it works</p>
       <h2 class="km-section-title reveal" style="--d:1">List in under 2 minutes</h2>
@@ -357,7 +471,7 @@
   <div class="km-divider"></div>
 
   <!-- STATS -->
-  <section class="km-stats">
+  <section class="km-stats" data-page="opportunity">
     <p class="km-section-label reveal" style="text-align:center">The opportunity</p>
     <h2 class="km-section-title reveal" style="--d:1;margin-bottom:2rem">Built for the 2nd largest university in the US</h2>
     <div class="km-stats-grid">
@@ -370,8 +484,104 @@
 
   <div class="km-divider"></div>
 
+  <!-- WHY STUDENTS TRUST / SAFETY -->
+  <section class="km-safety" data-page="safety">
+    <p class="km-section-label reveal">Safety &amp; protection</p>
+    <h2 class="km-section-title reveal" style="--d:1">Why students trust KnightMarket</h2>
+
+    <div class="km-safety-hero reveal">
+      <div class="km-safety-bigicon"><i class="ti ti-shield-check"></i></div>
+      <div>
+        <h3>KnightShield Buyer Protection</h3>
+        <p>Shop with confidence. Every eligible purchase made through KnightMarket is protected by KnightShield Buyer Protection. Payments made outside the app — cash, Venmo, Zelle, Cash App — are not covered.</p>
+        <div class="km-safety-note"><i class="ti ti-lock"></i> Protected purchases require payment through KnightMarket.</div>
+      </div>
+    </div>
+
+    <div class="km-safety-grid">
+      <div class="km-safety-card reveal" style="--d:1">
+        <div class="km-safety-icon"><i class="ti ti-wallet"></i></div>
+        <h3>Secure Escrow Payments</h3>
+        <p>Your money stays protected until the transaction is complete.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Buyer pays securely through the app</li>
+          <li><i class="ti ti-check"></i> Funds are held in escrow</li>
+          <li><i class="ti ti-check"></i> Seller gets paid only after successful delivery or pickup</li>
+          <li><i class="ti ti-check"></i> Disputes can be opened for items that aren't as described</li>
+        </ul>
+      </div>
+
+      <div class="km-safety-card reveal" style="--d:2">
+        <div class="km-safety-icon"><i class="ti ti-qrcode"></i></div>
+        <h3>QR Code Pickup Verification</h3>
+        <p>For in-person exchanges, sellers receive a unique QR code after a purchase.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Inspect the item before accepting it</li>
+          <li><i class="ti ti-check"></i> Scan the QR code when satisfied</li>
+          <li><i class="ti ti-check"></i> Payment is instantly released to the seller</li>
+          <li><i class="ti ti-check"></i> No scan, no payment release</li>
+        </ul>
+      </div>
+
+      <div class="km-safety-card reveal" style="--d:3">
+        <div class="km-safety-icon"><i class="ti ti-school"></i></div>
+        <h3>Verified UCF Students Only</h3>
+        <p>Every account must be verified with a UCF email address.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Student-only community</li>
+          <li><i class="ti ti-check"></i> Reduced risk of fake accounts</li>
+          <li><i class="ti ti-check"></i> Greater accountability</li>
+          <li><i class="ti ti-check"></i> Safer campus transactions</li>
+        </ul>
+      </div>
+
+      <div class="km-safety-card reveal" style="--d:1">
+        <div class="km-safety-icon"><i class="ti ti-award"></i></div>
+        <h3>Trusted Seller Program</h3>
+        <p>Build trust through successful transactions.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Reviews only count for purchases completed through KnightMarket</li>
+          <li><i class="ti ti-check"></i> Earn Trusted Seller badges</li>
+          <li><i class="ti ti-check"></i> Gain visibility in search results</li>
+          <li><i class="ti ti-check"></i> Build a verified reputation on campus</li>
+        </ul>
+      </div>
+
+      <div class="km-safety-card reveal" style="--d:2">
+        <div class="km-safety-icon"><i class="ti ti-shield-x"></i></div>
+        <h3>Scam Prevention</h3>
+        <p>KnightMarket is designed to keep transactions safe.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Contact information is automatically filtered</li>
+          <li><i class="ti ti-check"></i> Messaging stays inside the app</li>
+          <li><i class="ti ti-check"></i> Exact pickup locations are shared only when appropriate</li>
+          <li><i class="ti ti-check"></i> Suspicious activity can be reported and reviewed</li>
+        </ul>
+      </div>
+
+      <div class="km-safety-card reveal" style="--d:3">
+        <div class="km-safety-icon"><i class="ti ti-scale"></i></div>
+        <h3>Fair Dispute Resolution</h3>
+        <p>If something goes wrong, we're here to help.</p>
+        <ul class="km-safety-list">
+          <li><i class="ti ti-check"></i> Buyer protection for eligible purchases</li>
+          <li><i class="ti ti-check"></i> Dispute resolution support</li>
+          <li><i class="ti ti-check"></i> Protection fund for unresolved cases</li>
+          <li><i class="ti ti-check"></i> Dedicated review process for both buyers and sellers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="km-promise reveal">
+      <div class="km-promise-label">Our promise</div>
+      <p>KnightMarket isn't just another marketplace. It's a trusted community built exclusively for UCF students, where buying, selling, subleasing, and finding roommates is <b>safer, simpler, and more reliable</b> than traditional campus marketplaces.</p>
+    </div>
+  </section>
+
+  <div class="km-divider"></div>
+
   <!-- WAITLIST -->
-  <section class="km-waitlist" id="waitlist">
+  <section class="km-waitlist" data-page="waitlist">
     <h2 class="reveal">Be a founding Knight</h2>
     <p class="reveal" style="--d:1">Join the waitlist and get early access before anyone else. Free forever for early members.</p>
     <form name="waitlist" class="reveal" style="--d:2" onsubmit="return handleWaitlist(event)">
@@ -388,6 +598,30 @@
     © 2026 KnightMarket · For UCF students, by UCF students · Not affiliated with the University of Central Florida
   </footer>
 
+  <!-- Toolbar routing: kept in its own script so navigation never depends on any external CDN -->
+  <script>
+    (function () {
+      const PAGES = ['home', 'mission', 'trust', 'safety', 'features', 'how', 'alumni', 'opportunity', 'waitlist'];
+      const navlinks = document.getElementById('navlinks');
+      function showPage(name) {
+        if (!PAGES.includes(name)) name = 'home';
+        document.querySelectorAll('[data-page]').forEach(el => {
+          const on = el.getAttribute('data-page') === name;
+          el.classList.toggle('km-on', on);
+          if (on) el.querySelectorAll('.reveal').forEach(r => r.classList.add('in'));
+        });
+        document.querySelectorAll('.km-navlink').forEach(a => a.classList.toggle('active', a.getAttribute('data-go') === name));
+        if (navlinks) navlinks.classList.remove('open');
+        window.scrollTo(0, 0);
+      }
+      const current = () => location.hash.replace('#', '') || 'home';
+      window.addEventListener('hashchange', () => showPage(current()));
+      const burger = document.querySelector('.km-burger');
+      if (burger) burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+      showPage(current());
+    })();
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // Supabase anon key is public by design — access is controlled by Row Level Security.
@@ -398,8 +632,8 @@
     async function handleWaitlist(event) {
       event.preventDefault();
       const form = event.target;
-      const emailInput = document.getElementById('emailInput');
-      const email = emailInput.value.trim().toLowerCase();
+      const emailInput = form.querySelector('input[type="email"]');
+      const email = (emailInput.value || '').trim().toLowerCase();
 
       // Honeypot: bots fill hidden fields — silently drop them.
       if (form._honey && form._honey.value) return false;
@@ -422,8 +656,11 @@
         return false;
       }
 
+      // Show the success message that sits right after whichever form was submitted.
       form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
+      let msg = form.nextElementSibling;
+      if (!msg || !msg.classList || !msg.classList.contains('success-msg')) msg = document.getElementById('successMsg');
+      if (msg) msg.style.display = 'block';
       return false;
     }
 
