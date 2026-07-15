@@ -381,6 +381,20 @@
       .km-features .km-card h3 { font-size: 12px; line-height: 1.2; margin-bottom: 0; }
       .km-features .km-card p, .km-features .km-card-accent { display: none; }
 
+      /* "Why we exist" → same compact 3-up tiles */
+      .km-why .km-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 9px; }
+      .km-why-card { padding: 0.95rem 0.45rem; text-align: center; }
+      .km-why-card .km-bigicon { width: 40px; height: 40px; font-size: 18px; margin: 0 auto 0.55rem; border-radius: 12px; }
+      .km-why-card h3 { font-size: 12px; line-height: 1.2; margin-bottom: 0; }
+      .km-why-card p { display: none; }
+
+      /* "Safety & protection" cards → same compact 3-up tiles (hero banner stays) */
+      .km-safety-grid { grid-template-columns: repeat(3, 1fr); gap: 9px; }
+      .km-safety-card { padding: 0.95rem 0.4rem; text-align: center; }
+      .km-safety-icon { width: 40px; height: 40px; font-size: 18px; margin: 0 auto 0.55rem; border-radius: 12px; }
+      .km-safety-card h3 { font-size: 11.5px; line-height: 1.2; margin-bottom: 0; }
+      .km-safety-card > p, .km-safety-list { display: none; }
+
       /* How it works */
       .km-step { gap: 1rem; padding: 1.3rem 0; }
       .km-step-num { font-size: 30px; min-width: 40px; }
