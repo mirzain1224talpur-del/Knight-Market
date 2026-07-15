@@ -360,11 +360,18 @@
       .km-stat-num.km-stat-word { font-size: clamp(24px, 7vw, 34px); }
       .km-stat-label { font-size: 11.5px; }
 
-      /* Feature / why / roadmap / safety cards */
-      .km-cards, .km-grid-3, .km-safety-grid { gap: 12px; }
-      .km-card, .km-why-card, .km-roadmap-card, .km-safety-card { padding: 1.5rem; }
-      .km-card h3, .km-why-card h3, .km-roadmap-card h3 { font-size: 16.5px; }
-      .km-card p, .km-why-card p, .km-roadmap-card p, .km-safety-card > p { font-size: 13.5px; }
+      /* Why / roadmap / safety cards */
+      .km-grid-3, .km-safety-grid { gap: 12px; }
+      .km-why-card, .km-roadmap-card, .km-safety-card { padding: 1.5rem; }
+      .km-why-card h3, .km-roadmap-card h3 { font-size: 16.5px; }
+      .km-why-card p, .km-roadmap-card p, .km-safety-card > p { font-size: 13.5px; }
+
+      /* "What you can do" → compact 3-up tiles (icon + label), easy to scan */
+      .km-features .km-cards { grid-template-columns: repeat(3, 1fr); gap: 9px; }
+      .km-features .km-card { padding: 0.95rem 0.45rem; text-align: center; }
+      .km-features .km-card-icon { width: 40px; height: 40px; font-size: 18px; margin: 0 auto 0.55rem; border-radius: 12px; }
+      .km-features .km-card h3 { font-size: 12px; line-height: 1.2; margin-bottom: 0; }
+      .km-features .km-card p, .km-features .km-card-accent { display: none; }
 
       /* How it works */
       .km-step { gap: 1rem; padding: 1.3rem 0; }
