@@ -331,12 +331,14 @@
        scannable funnel: Hero → Mission → Features → How it works → Safety → Waitlist.
        The dense secondary sections stay in the DOM but are hidden on phones. */
     @media (max-width: 600px) {
-      .km-stats, .km-why, .km-compare, .km-roadmap, .km-trust, .km-alumni { display: none; }
-      .km-safety-grid { display: none; }                 /* keep the safety promise, drop the card grid */
-      .km-navlink[href="#opportunity"],
-      .km-navlink[href="#compare"],
-      .km-navlink[href="#roadmap"],
-      .km-navlink[href="#trust"] { display: none; }       /* trim the mobile menu to what's shown */
+      /* Phones: only the essentials — Hero, Features, Waitlist. */
+      .km-stats, .km-why, .km-compare, .km-roadmap, .km-trust, .km-alumni,
+      .km-mission, .km-how, .km-safety { display: none; }
+      .km-subtitle-2 { display: none; }                       /* drop the redundant 2nd hero line */
+      .km-cards > .km-card:nth-child(n+5) { display: none; }  /* show the 4 core features only */
+      .km-navlink[href="#mission"], .km-navlink[href="#opportunity"],
+      .km-navlink[href="#compare"], .km-navlink[href="#safety"],
+      .km-navlink[href="#roadmap"], .km-navlink[href="#trust"] { display: none; }
 
       /* Tighter phone-first rhythm */
       section { padding: 3.2rem 1.15rem; }
