@@ -326,39 +326,76 @@
       .km-step-num { font-size: 36px; min-width: 46px; }
     }
 
-    /* ===================== PHONE: focused funnel (≤600px only; iPad/desktop untouched) =====================
-       On phones the full 12-section page is overwhelming, so we show a tight,
-       scannable funnel: Hero → Mission → Features → How it works → Safety → Waitlist.
-       The dense secondary sections stay in the DOM but are hidden on phones. */
+    /* ===================== PHONE: full site, scaled to fit (≤600px only; iPad/desktop untouched) =====================
+       ALL sections & content are kept — just smaller type, tighter spacing, and
+       single-column layouts so the whole site reads comfortably on a phone. */
     @media (max-width: 600px) {
-      /* Phones: only the essentials — Hero, Features, Waitlist. */
-      .km-stats, .km-why, .km-compare, .km-roadmap, .km-trust, .km-alumni,
-      .km-mission, .km-how, .km-safety { display: none; }
-      .km-subtitle-2 { display: none; }                       /* drop the redundant 2nd hero line */
-      .km-cards > .km-card:nth-child(n+5) { display: none; }  /* show the 4 core features only */
-      .km-navlink[href="#mission"], .km-navlink[href="#opportunity"],
-      .km-navlink[href="#compare"], .km-navlink[href="#safety"],
-      .km-navlink[href="#roadmap"], .km-navlink[href="#trust"] { display: none; }
+      /* Every multi-column grid collapses to one clean column */
+      .km-stats-grid, .km-grid-3, .km-cards, .km-safety-grid,
+      .km-compare-grid, .km-trust-layout, .km-alumni-cards { grid-template-columns: 1fr; }
 
-      /* Tighter phone-first rhythm */
-      section { padding: 3.2rem 1.15rem; }
-      .km-hero { padding-top: 4.4rem; padding-bottom: 2.6rem; }
-      .km-ucf-pill { margin-bottom: 1.3rem; }
-      .km-h1 { font-size: clamp(34px, 11vw, 48px); letter-spacing: -1.3px; margin-bottom: 1rem; }
-      .km-subtitle { font-size: 15.5px; margin-bottom: 0.8rem; }
-      .km-subtitle-2 { font-size: 13.5px; margin-bottom: 1.7rem; }
-      .km-section-title { font-size: clamp(25px, 7.4vw, 33px); }
-      .km-section-sub { font-size: 14.5px; margin-bottom: 1.9rem; }
-      .km-mission-text { font-size: clamp(20px, 6vw, 27px); line-height: 1.45; }
-      .km-cards, .km-grid-3, .km-stats-grid, .km-safety-grid { gap: 12px; }
-      .km-card, .km-safety-card, .km-why-card { padding: 1.5rem; }
+      /* Section rhythm + shared headings */
+      section { padding: 3rem 1.15rem; }
+      .km-hero { padding-top: 4.4rem; padding-bottom: 2.8rem; }
+      .km-section-label { font-size: 10.5px; letter-spacing: 1.4px; margin-bottom: 0.7rem; }
+      .km-section-title { font-size: clamp(24px, 7vw, 32px); margin-bottom: 0.8rem; }
+      .km-section-sub { font-size: 14px; line-height: 1.6; margin-bottom: 1.8rem; }
 
-      /* Full-width, thumb-friendly signup */
-      .km-email-row { flex-direction: column; }
+      /* Hero */
+      .km-ucf-pill { font-size: 10.5px; margin-bottom: 1.2rem; }
+      .km-h1 { font-size: clamp(33px, 10.5vw, 46px); letter-spacing: -1.2px; margin-bottom: 0.95rem; }
+      .km-subtitle { font-size: 15px; margin-bottom: 0.7rem; }
+      .km-subtitle-2 { font-size: 13px; margin-bottom: 1.6rem; }
+      .km-hero-note { font-size: 12px; }
+      .km-email-row { flex-direction: column; }        /* full-width, thumb-friendly signup */
       .km-input, .km-btn-primary { width: 100%; }
 
-      /* Calmer background on phones (less visual noise, smoother scroll) */
-      .bg-glow.c, .bg-dots, .bg-watermark { display: none; }
+      /* Mission */
+      .km-mission-text { font-size: clamp(19px, 5.6vw, 26px); line-height: 1.45; }
+
+      /* Opportunity / stats */
+      .km-stats-grid { gap: 12px; }
+      .km-stat-card { padding: 1.7rem 1.3rem; }
+      .km-stat-num { font-size: clamp(30px, 9vw, 42px); }
+      .km-stat-num.km-stat-word { font-size: clamp(24px, 7vw, 34px); }
+      .km-stat-label { font-size: 11.5px; }
+
+      /* Feature / why / roadmap / safety cards */
+      .km-cards, .km-grid-3, .km-safety-grid { gap: 12px; }
+      .km-card, .km-why-card, .km-roadmap-card, .km-safety-card { padding: 1.5rem; }
+      .km-card h3, .km-why-card h3, .km-roadmap-card h3 { font-size: 16.5px; }
+      .km-card p, .km-why-card p, .km-roadmap-card p, .km-safety-card > p { font-size: 13.5px; }
+
+      /* How it works */
+      .km-step { gap: 1rem; padding: 1.3rem 0; }
+      .km-step-num { font-size: 30px; min-width: 40px; }
+      .km-step-content h4 { font-size: 16px; }
+      .km-step-content p { font-size: 13.5px; }
+
+      /* Comparison */
+      .km-compare-col { padding: 1.6rem; }
+      .km-compare-list li { font-size: 13.5px; }
+
+      /* Safety */
+      .km-safety-hero { flex-direction: column; gap: 1rem; padding: 1.7rem; }
+      .km-safety-bigicon { width: 50px; height: 50px; font-size: 24px; }
+      .km-safety-hero h3 { font-size: 18px; }
+      .km-promise { padding: 2rem 1.4rem; }
+      .km-promise p { font-size: 14.5px; }
+
+      /* Trust + Alumni */
+      .km-trust-layout { gap: 1.2rem; }
+      .km-profile-card { padding: 1.6rem; }
+      .km-trust-point { padding: 1.2rem; }
+      .km-alumni-cards { margin-top: 1.5rem; }
+      .km-alumni-opt { padding: 1.6rem; }
+
+      /* Waitlist */
+      .km-waitlist h2 { font-size: clamp(28px, 8vw, 40px); }
+      .km-waitlist > p { font-size: 15px; }
+
+      /* Calmer background on phones (perf + clarity) */
+      .bg-glow.c, .bg-watermark { display: none; }
     }
 
     /* ===================== REDUCED MOTION ===================== */
