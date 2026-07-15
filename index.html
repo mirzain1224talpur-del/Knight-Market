@@ -180,6 +180,11 @@
       background: linear-gradient(135deg, rgba(240,185,44,0.20), rgba(240,185,44,0.05)); border: 1px solid rgba(240,185,44,0.22); }
     .km-why-card h3, .km-roadmap-card h3 { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 19px; color: var(--text); margin-bottom: 0.6rem; }
     .km-why-card p, .km-roadmap-card p { font-size: 14.5px; color: var(--text-dim); line-height: 1.65; }
+    /* "Everything in one app" checklist (desktop 2-col, mobile 1-col) */
+    .km-everything-label { text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold-bright); margin: 2.8rem 0 1.5rem; }
+    .km-check-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 13px 30px; max-width: 860px; margin: 0 auto; }
+    .km-check-list li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.5px; color: var(--text-dim); line-height: 1.5; }
+    .km-check-list li i { color: var(--gold-bright); font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
     /* ===================== FEATURES ===================== */
     .km-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
@@ -387,6 +392,9 @@
       .km-why-card .km-bigicon { width: 40px; height: 40px; font-size: 18px; margin: 0 auto 0.55rem; border-radius: 12px; }
       .km-why-card h3 { font-size: 12px; line-height: 1.2; margin-bottom: 0; }
       .km-why-card p { display: none; }
+      .km-check-list { grid-template-columns: 1fr; gap: 11px; }   /* checklist stacks on phones */
+      .km-check-list li { font-size: 13.5px; }
+      .km-everything-label { margin: 2rem 0 1.2rem; }
 
       /* "Safety & protection" cards → same compact 3-up tiles (hero banner stays) */
       .km-safety-grid { grid-template-columns: repeat(3, 1fr); gap: 9px; }
@@ -554,6 +562,27 @@
         <p>Give student entrepreneurs a professional storefront to launch, sell, and grow their business across campus.</p>
       </div>
     </div>
+
+    <p class="km-everything-label reveal">Everything in one app</p>
+    <ul class="km-check-list reveal" style="--d:1">
+      <li><i class="ti ti-circle-check"></i> Buy &amp; sell items with verified students</li>
+      <li><i class="ti ti-circle-check"></i> Find &amp; post housing, subleases &amp; roommates</li>
+      <li><i class="ti ti-circle-check"></i> Discover &amp; offer tutoring and academic help</li>
+      <li><i class="ti ti-circle-check"></i> Hire or provide services — moving, photography, design</li>
+      <li><i class="ti ti-circle-check"></i> Buy &amp; sell event tickets</li>
+      <li><i class="ti ti-circle-check"></i> Browse campus clubs, events &amp; activities</li>
+      <li><i class="ti ti-circle-check"></i> Secure in-app payments with buyer protection</li>
+      <li><i class="ti ti-circle-check"></i> Verified student-only community (university email)</li>
+      <li><i class="ti ti-circle-check"></i> Ratings, reviews &amp; trusted-seller badges</li>
+      <li><i class="ti ti-circle-check"></i> Real-time in-app messaging</li>
+      <li><i class="ti ti-circle-check"></i> Saved listings, offers &amp; favorites</li>
+      <li><i class="ti ti-circle-check"></i> Category marketplace — furniture, textbooks, bikes, cars…</li>
+      <li><i class="ti ti-circle-check"></i> Delivery, shipping, or campus meetup</li>
+      <li><i class="ti ti-circle-check"></i> Local business &amp; student-org storefronts</li>
+      <li><i class="ti ti-circle-check"></i> AI-powered search &amp; personalized picks</li>
+      <li><i class="ti ti-circle-check"></i> Campus-specific marketplace per university</li>
+      <li><i class="ti ti-circle-check"></i> One app to live, study &amp; connect on campus</li>
+    </ul>
   </section>
 
   <div class="km-divider"></div>
