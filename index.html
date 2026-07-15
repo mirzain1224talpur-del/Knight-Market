@@ -326,6 +326,39 @@
       .km-step-num { font-size: 36px; min-width: 46px; }
     }
 
+    /* ===================== PHONE: focused funnel (≤600px only; iPad/desktop untouched) =====================
+       On phones the full 12-section page is overwhelming, so we show a tight,
+       scannable funnel: Hero → Mission → Features → How it works → Safety → Waitlist.
+       The dense secondary sections stay in the DOM but are hidden on phones. */
+    @media (max-width: 600px) {
+      .km-stats, .km-why, .km-compare, .km-roadmap, .km-trust, .km-alumni { display: none; }
+      .km-safety-grid { display: none; }                 /* keep the safety promise, drop the card grid */
+      .km-navlink[href="#opportunity"],
+      .km-navlink[href="#compare"],
+      .km-navlink[href="#roadmap"],
+      .km-navlink[href="#trust"] { display: none; }       /* trim the mobile menu to what's shown */
+
+      /* Tighter phone-first rhythm */
+      section { padding: 3.2rem 1.15rem; }
+      .km-hero { padding-top: 4.4rem; padding-bottom: 2.6rem; }
+      .km-ucf-pill { margin-bottom: 1.3rem; }
+      .km-h1 { font-size: clamp(34px, 11vw, 48px); letter-spacing: -1.3px; margin-bottom: 1rem; }
+      .km-subtitle { font-size: 15.5px; margin-bottom: 0.8rem; }
+      .km-subtitle-2 { font-size: 13.5px; margin-bottom: 1.7rem; }
+      .km-section-title { font-size: clamp(25px, 7.4vw, 33px); }
+      .km-section-sub { font-size: 14.5px; margin-bottom: 1.9rem; }
+      .km-mission-text { font-size: clamp(20px, 6vw, 27px); line-height: 1.45; }
+      .km-cards, .km-grid-3, .km-stats-grid, .km-safety-grid { gap: 12px; }
+      .km-card, .km-safety-card, .km-why-card { padding: 1.5rem; }
+
+      /* Full-width, thumb-friendly signup */
+      .km-email-row { flex-direction: column; }
+      .km-input, .km-btn-primary { width: 100%; }
+
+      /* Calmer background on phones (less visual noise, smoother scroll) */
+      .bg-glow.c, .bg-dots, .bg-watermark { display: none; }
+    }
+
     /* ===================== REDUCED MOTION ===================== */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
