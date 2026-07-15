@@ -379,12 +379,13 @@
       .km-why-card h3, .km-roadmap-card h3 { font-size: 16.5px; }
       .km-why-card p, .km-roadmap-card p, .km-safety-card > p { font-size: 13.5px; }
 
-      /* "What you can do" → compact 3-up tiles (icon + label), easy to scan */
-      .km-features .km-cards { grid-template-columns: repeat(3, 1fr); gap: 9px; }
-      .km-features .km-card { padding: 0.95rem 0.45rem; text-align: center; }
-      .km-features .km-card-icon { width: 40px; height: 40px; font-size: 18px; margin: 0 auto 0.55rem; border-radius: 12px; }
-      .km-features .km-card h3 { font-size: 12px; line-height: 1.2; margin-bottom: 0; }
-      .km-features .km-card p, .km-features .km-card-accent { display: none; }
+      /* "What you can do" → 6 simple cards, 2-up on phones (icon + title + desc) */
+      .km-features .km-cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .km-features .km-card { padding: 1.2rem 0.85rem; text-align: center; }
+      .km-features .km-card-icon { width: 42px; height: 42px; font-size: 19px; margin: 0 auto 0.6rem; border-radius: 12px; }
+      .km-features .km-card h3 { font-size: 14px; line-height: 1.2; margin-bottom: 0.4rem; }
+      .km-features .km-card p { font-size: 11.5px; line-height: 1.45; }
+      .km-features .km-card-accent { display: none; }
 
       /* "Why we exist" → same compact 3-up tiles */
       .km-why .km-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 9px; }
@@ -593,15 +594,12 @@
     <h2 class="km-section-title reveal" style="--d:1">Everything a Knight needs</h2>
     <p class="km-section-sub reveal" style="--d:2">One app for housing, selling, services, and connecting — built for the way Knights actually live.</p>
     <div class="km-cards">
-      <div class="km-card glass glass-hover reveal" style="--d:1"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-home"></i></div><h3>Sublease &amp; Lease</h3><p>Post your apartment or find a short-term sublease near campus. Filter by price, dates, and proximity to UCF.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:2"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-tag"></i></div><h3>Drop &amp; Sell</h3><p>List textbooks, furniture, clothes, and more. No shipping needed — drop it off, pick it up.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:3"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-briefcase"></i></div><h3>Knight Services</h3><p>Hire a verified Knight — tutoring, design, photography, moving, cleaning &amp; more. Message, agree, done.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:1"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-shield-check"></i></div><h3>Knights Only</h3><p>Access requires a verified ucf.edu email. Every user is a real UCF student — no scams, no strangers.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:2"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-message-circle"></i></div><h3>In-App Chat</h3><p>Message sellers and listers directly. Share photos, coordinate meetups, negotiate prices, close the deal.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:3"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-gavel"></i></div><h3>Make an Offer</h3><p>Name your price. Sellers accept, counter, or decline in a tap — haggle without the awkward DMs.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:1"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-lock"></i></div><h3>Secure Checkout</h3><p>Pay right in the app. Funds are held safely and released once the deal is done — buy with confidence.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:2"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-map-pin"></i></div><h3>Campus-First Map</h3><p>See listings on a map centered around UCF. Find apartments on Alafaya, items near your dorm.</p></div>
-      <div class="km-card glass glass-hover reveal" style="--d:3"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-star"></i></div><h3>Knight Rating</h3><p>Rate your experience after every deal. Build a reputation and know who you're dealing with.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:1"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-shopping-cart"></i></div><h3>Buy &amp; Sell</h3><p>Furniture, electronics, clothes, textbooks, bikes, and more.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:2"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-home"></i></div><h3>Housing</h3><p>Find roommates, apartments, and subleases.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:3"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-briefcase"></i></div><h3>Services</h3><p>Tutoring, moving, photography, design, coding, and more.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:1"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-ticket"></i></div><h3>Events</h3><p>Buy and sell event tickets and discover what's happening on campus.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:2"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-message-circle"></i></div><h3>Connect</h3><p>Chat directly with verified students.</p></div>
+      <div class="km-card glass glass-hover reveal" style="--d:3"><div class="km-card-accent"></div><div class="km-card-icon"><i class="ti ti-shield-check"></i></div><h3>Safe Marketplace</h3><p>Verified students, ratings, reviews, and secure payments.</p></div>
     </div>
 
     <!-- Deals for every budget -->
@@ -616,33 +614,6 @@
         <span class="km-pill">Under $50</span>
       </div>
     </div>
-
-    <p class="km-everything-label reveal">Everything you can do</p>
-    <ul class="km-check-list reveal" style="--d:1">
-      <li><i class="ti ti-circle-check"></i> Create a verified student account</li>
-      <li><i class="ti ti-circle-check"></i> Buy items from other students</li>
-      <li><i class="ti ti-circle-check"></i> Sell items in minutes</li>
-      <li><i class="ti ti-circle-check"></i> Make offers &amp; negotiate prices</li>
-      <li><i class="ti ti-circle-check"></i> Chat with buyers &amp; sellers</li>
-      <li><i class="ti ti-circle-check"></i> Pay securely through the app</li>
-      <li><i class="ti ti-circle-check"></i> Get buyer protection on eligible purchases</li>
-      <li><i class="ti ti-circle-check"></i> Schedule campus meetups</li>
-      <li><i class="ti ti-circle-check"></i> Request delivery or shipping (where available)</li>
-      <li><i class="ti ti-circle-check"></i> Save listings to favorites</li>
-      <li><i class="ti ti-circle-check"></i> Follow trusted sellers</li>
-      <li><i class="ti ti-circle-check"></i> Rate &amp; review transactions</li>
-      <li><i class="ti ti-circle-check"></i> Build a reputation &amp; earn trusted badges</li>
-      <li><i class="ti ti-circle-check"></i> Find apartments, subleases &amp; roommates</li>
-      <li><i class="ti ti-circle-check"></i> Post housing listings</li>
-      <li><i class="ti ti-circle-check"></i> Buy &amp; sell event tickets</li>
-      <li><i class="ti ti-circle-check"></i> Find tutors or offer tutoring</li>
-      <li><i class="ti ti-circle-check"></i> Offer services — design, photography, moving, coding…</li>
-      <li><i class="ti ti-circle-check"></i> Hire students for services</li>
-      <li><i class="ti ti-circle-check"></i> Discover campus events</li>
-      <li><i class="ti ti-circle-check"></i> Browse local student businesses</li>
-      <li><i class="ti ti-circle-check"></i> Report scams or suspicious listings</li>
-      <li><i class="ti ti-circle-check"></i> Manage listings, purchases &amp; sales from one profile</li>
-    </ul>
   </section>
 
   <div class="km-divider"></div>
