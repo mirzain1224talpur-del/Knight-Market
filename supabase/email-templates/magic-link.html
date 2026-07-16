@@ -1,0 +1,33 @@
+<!--
+  KnightMarket — Auth "Magic Link" template (also used for EMAIL OTP login).
+  Paste this into: Supabase Dashboard -> Authentication -> Emails -> Templates
+  -> "Magic Link". The 6-digit code is {{ .Token }}.
+
+  Why this template matters: a branded, plain, single-purpose email that clearly
+  identifies the sender + purpose is far less likely to be flagged as phishing
+  than Supabase's default. The real deliverability fix, though, is Custom SMTP
+  via Resend (knightmarket.org DKIM/SPF/DMARC) — see supabase/AUTH-EMAIL-SETUP.md.
+
+  Available variables: {{ .Token }} {{ .ConfirmationURL }} {{ .Email }} {{ .SiteURL }}
+-->
+<div style="background:#0A0A0A;padding:40px 20px;font-family:Helvetica,Arial,sans-serif;color:#F5F0E8;">
+  <div style="max-width:480px;margin:0 auto;background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px;text-align:center;">
+    <div style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:20px;">Knight<span style="color:#FFC904;">Market</span></div>
+    <h1 style="font-size:22px;margin:0 0 12px;color:#F5F0E8;">Your login code</h1>
+    <p style="font-size:15px;line-height:1.6;color:rgba(245,240,232,0.6);margin:0 0 24px;">
+      Enter this code in the KnightMarket app to sign in. It expires in a few minutes.
+    </p>
+    <div style="font-size:38px;font-weight:800;letter-spacing:10px;color:#FFC904;background:rgba(255,201,4,0.08);border:1px solid rgba(255,201,4,0.25);border-radius:12px;padding:18px 0;margin:0 0 24px;">
+      {{ .Token }}
+    </div>
+    <p style="font-size:13px;line-height:1.6;color:rgba(245,240,232,0.45);margin:0;">
+      If you didn't request this, you can safely ignore this email — no one can sign in without the code above.
+    </p>
+    <p style="font-size:13px;color:rgba(245,240,232,0.35);margin-top:28px;">
+      Go Knights &#9876;&#65039;<br/>&mdash; The KnightMarket Team
+    </p>
+  </div>
+  <p style="text-align:center;font-size:11px;color:rgba(245,240,232,0.25);margin-top:24px;">
+    Sent by KnightMarket because a login code was requested for {{ .Email }}.<br/>Not affiliated with the University of Central Florida.
+  </p>
+</div>

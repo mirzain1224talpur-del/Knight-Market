@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+<title>KnightMarket</title>
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="KnightMarket" />
+<meta name="theme-color" content="#08080A" />
+<link rel="apple-touch-icon" href="branding/app-icon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  :root {
+    --bg: #08080A; --surface: #141417; --surface-2: #1A1A1E; --surface-3: #222228;
+    --text: #F5F0E8; --text-dim: rgba(245,240,232,0.58); --text-faint: rgba(245,240,232,0.36);
+    --gold: #F0B92C; --gold-bright: #FFD75E; --gold-deep: #C68A12;
+    --gold-grad: linear-gradient(135deg, #FFEFB0 0%, #FBD45A 38%, #E9A91C 72%, #C8890F 100%);
+    --gold-line: rgba(240,185,44,0.28); --border: rgba(255,255,255,0.08); --border-2: rgba(255,255,255,0.13);
+    --green: #34C77B; --red: #ff6b6b; --blue: #5AA9FF;
+    --r: 16px; --topbar: 54px; --tabbar: calc(60px + env(safe-area-inset-bottom, 0px));
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; }
+  body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(800px 420px at 50% -8%, rgba(240,185,44,0.07), transparent 60%); }
+  ::selection { background: rgba(240,185,44,0.28); color: #fff; }
+  button, input, textarea, select { font-family: inherit; color: inherit; }
+  img { display: block; }
+  .hidden { display: none !important; }
+  .avatar { border-radius: 50%; display: grid; place-items: center; font-family: 'Outfit'; font-weight: 700; color: #1A1206; background: var(--gold-grad); flex-shrink: 0; }
+  .avatar.xs { width: 26px; height: 26px; font-size: 10px; }
+  .avatar.sm { width: 32px; height: 32px; font-size: 12px; }
+  .avatar.md { width: 42px; height: 42px; font-size: 15px; }
+  .avatar.lg { width: 78px; height: 78px; font-size: 28px; }
+  .vchk { color: var(--gold); }
+
+  /* TOP BAR */
+  .topbar { position: fixed; top: 0; left: 0; right: 0; height: var(--topbar); z-index: 40; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 14px; padding-top: env(safe-area-inset-top, 0px); background: rgba(8,8,10,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 0.5px solid var(--border); }
+  .topbar.tall { height: calc(var(--topbar) + env(safe-area-inset-top, 0px)); }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .brand .mk { height: 30px; width: auto; display: block; filter: drop-shadow(0 0 12px rgba(240,185,44,0.35)); }
+  .brand .ttl { font-family: 'Outfit'; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+  .brand .ttl b { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .topbar .vtitle { font-family: 'Outfit'; font-weight: 700; font-size: 17px; }
+  .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.05); color: var(--text); display: grid; place-items: center; font-size: 20px; cursor: pointer; transition: .15s; }
+  .icon-btn:active { transform: scale(0.92); }
+
+  /* APP / VIEWS */
+  #app { padding-top: calc(var(--topbar) + env(safe-area-inset-top, 0px)); padding-bottom: var(--tabbar); min-height: 100vh; max-width: 640px; margin: 0 auto; }
+  .view { padding: 12px 14px 24px; }
+  .view-head { font-family: 'Outfit'; font-weight: 800; font-size: 24px; letter-spacing: -0.6px; margin: 6px 2px 14px; }
+
+  .card { background: linear-gradient(180deg, var(--surface) 0%, #0E0E11 100%); border: 0.5px solid var(--border); border-radius: var(--r); }
+
+  /* COMPOSER TRIGGER (feed) */
+  .compose-trigger { display: flex; align-items: center; gap: 11px; padding: 12px 14px; margin-bottom: 14px; cursor: pointer; }
+  .compose-trigger .ph { flex: 1; color: var(--text-faint); font-size: 15px; }
+  .compose-trigger .go { color: var(--gold); font-size: 22px; }
+
+  /* CHIPS */
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex-shrink: 0; background: rgba(255,255,255,0.03); border: 0.5px solid var(--border); color: var(--text-dim); font-family: 'Outfit'; font-weight: 600; font-size: 13px; padding: 8px 15px; border-radius: 99px; cursor: pointer; transition: .15s; white-space: nowrap; }
+  .chip.active { background: var(--gold-grad); color: #1A1206; border-color: transparent; }
+
+  /* POST */
+  .post { padding: 15px; margin-bottom: 13px; }
+  .post-head { display: flex; align-items: center; gap: 11px; }
+  .post-head .who { flex: 1; min-width: 0; }
+  .post-head .nm { font-family: 'Outfit'; font-weight: 700; font-size: 14.5px; display: flex; align-items: center; gap: 5px; }
+  .post-head .nm i { font-size: 14px; }
+  .post-head .meta { font-size: 12px; color: var(--text-faint); margin-top: 1px; }
+  .post-menu { background: none; border: 0; color: var(--text-faint); cursor: pointer; padding: 6px; border-radius: 8px; font-size: 18px; }
+  .post-menu:active { color: var(--red); }
+  .post-text { margin-top: 11px; font-size: 15px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; }
+  .post-img { margin-top: 11px; border-radius: 12px; overflow: hidden; border: 0.5px solid var(--border); }
+  .post-img img { width: 100%; max-height: 460px; object-fit: cover; }
+  .listing-badge { margin-top: 11px; display: flex; align-items: center; gap: 11px; background: linear-gradient(135deg, rgba(240,185,44,0.1), rgba(240,185,44,0.02)); border: 0.5px solid var(--gold-line); border-radius: 12px; padding: 11px 13px; }
+  .listing-badge .price { font-family: 'Outfit'; font-weight: 800; font-size: 19px; color: var(--gold-bright); }
+  .listing-badge .cat { font-family: 'Outfit'; font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gold); background: rgba(240,185,44,0.12); border: 0.5px solid var(--gold-line); padding: 4px 9px; border-radius: 20px; }
+  .post-actions { display: flex; gap: 2px; margin-top: 12px; padding-top: 9px; border-top: 0.5px solid var(--border); }
+  .act { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: none; border: 0; color: var(--text-dim); font-family: 'Outfit'; font-weight: 600; font-size: 13px; padding: 9px; border-radius: 9px; cursor: pointer; transition: .12s; }
+  .act i { font-size: 18px; }
+  .act:active { background: rgba(255,255,255,0.05); }
+  .act.on, .act.on i { color: var(--gold-bright); }
+  .comments { margin-top: 12px; display: none; }
+  .comments.on { display: block; }
+  .comment { display: flex; gap: 8px; margin-bottom: 9px; }
+  .comment .bubble { background: var(--surface-2); border-radius: 12px; padding: 7px 11px; }
+  .comment .cn { font-family: 'Outfit'; font-weight: 700; font-size: 12.5px; }
+  .comment .ct { font-size: 13.5px; line-height: 1.4; }
+  .cinput { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+  .cinput input { flex: 1; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 99px; padding: 9px 14px; font-size: 13.5px; outline: none; }
+  .cinput button { background: none; border: 0; color: var(--gold); font-size: 19px; cursor: pointer; padding: 5px; }
+
+  /* MARKET */
+  .search { display: flex; align-items: center; gap: 9px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 11px 14px; margin-bottom: 12px; }
+  .search i { color: var(--text-faint); font-size: 19px; }
+  .search input { flex: 1; background: none; border: 0; outline: none; font-size: 15px; }
+  .mkt-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .seg { display: inline-flex; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 10px; padding: 3px; margin-left: auto; }
+  .seg button { background: none; border: 0; color: var(--text-dim); font-family: 'Outfit'; font-weight: 600; font-size: 12.5px; padding: 6px 12px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+  .seg button.active { background: var(--gold-grad); color: #1A1206; }
+  .mkt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mkt-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: .15s; }
+  .mkt-card:active { transform: scale(0.98); }
+  .mkt-thumb { aspect-ratio: 1/1; background: var(--surface-3); position: relative; display: grid; place-items: center; }
+  .mkt-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .mkt-thumb .noimg { font-size: 34px; color: var(--text-faint); }
+  .mkt-thumb .save { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(0,0,0,0.5); color: #fff; display: grid; place-items: center; font-size: 17px; backdrop-filter: blur(4px); cursor: pointer; }
+  .mkt-thumb .save.on { color: var(--gold-bright); }
+  .mkt-thumb .catpill { position: absolute; top: 8px; left: 8px; font-family: 'Outfit'; font-weight: 700; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.5px; color: #1A1206; background: var(--gold-grad); padding: 3px 8px; border-radius: 20px; }
+  .mkt-info { padding: 10px 11px 12px; }
+  .mkt-info .pr { font-family: 'Outfit'; font-weight: 800; font-size: 16px; color: var(--gold-bright); }
+  .mkt-info .ti { font-size: 13.5px; font-weight: 500; margin-top: 2px; line-height: 1.3; max-height: 2.6em; overflow: hidden; }
+  .mkt-info .lo { font-size: 11.5px; color: var(--text-faint); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+  #map { height: 58vh; min-height: 360px; border-radius: 14px; overflow: hidden; border: 0.5px solid var(--border); position: relative; z-index: 0; }
+  .leaflet-pane, .leaflet-top, .leaflet-bottom { z-index: 1 !important; }
+  .leaflet-control-zoom a { background: var(--surface-2) !important; color: var(--text) !important; border-color: var(--border) !important; }
+  .leaflet-popup-content-wrapper { background: var(--surface); color: var(--text); border-radius: 12px; }
+  .leaflet-popup-tip { background: var(--surface); }
+  .map-pop { font-family: 'Outfit'; }
+  .map-pop .p { font-weight: 800; color: var(--gold-bright); font-size: 15px; }
+  .map-pop .t { font-size: 13px; margin: 2px 0 6px; color: var(--text); }
+  .map-pop button { background: var(--gold-grad); color: #1A1206; border: 0; font-family: 'Outfit'; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+
+  /* MESSAGES */
+  .thread { display: flex; align-items: center; gap: 12px; padding: 13px 6px; border-bottom: 0.5px solid var(--border); cursor: pointer; }
+  .thread .tb { flex: 1; min-width: 0; }
+  .thread .tn { font-family: 'Outfit'; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 5px; }
+  .thread .tl { font-size: 13px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .thread .tt { font-size: 11px; color: var(--text-faint); align-self: flex-start; margin-top: 3px; }
+  .thread .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* PROFILE */
+  .prof-head { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 14px 0 18px; }
+  .prof-name { font-family: 'Outfit'; font-weight: 800; font-size: 22px; margin-top: 12px; display: flex; align-items: center; gap: 7px; }
+  .prof-name i { font-size: 19px; }
+  .prof-sub { color: var(--text-dim); font-size: 14px; margin-top: 3px; }
+  .prof-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(240,185,44,0.1); border: 0.5px solid var(--gold-line); color: var(--gold-bright); font-family: 'Outfit'; font-weight: 600; font-size: 12px; padding: 5px 12px; border-radius: 20px; margin-top: 12px; }
+  .prof-stats { display: flex; gap: 10px; width: 100%; margin: 16px 0; }
+  .pstat { flex: 1; background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 13px; text-align: center; }
+  .pstat .n { font-family: 'Outfit'; font-weight: 800; font-size: 20px; color: var(--gold-bright); }
+  .pstat .l { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; }
+  .prof-bio { font-size: 14px; color: var(--text-dim); text-align: center; line-height: 1.5; margin-bottom: 6px; padding: 0 6px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-family: 'Outfit'; font-weight: 700; font-size: 14px; padding: 12px 18px; border-radius: 11px; border: 0; cursor: pointer; transition: .15s; }
+  .btn.gold { background: var(--gold-grad); color: #1A1206; box-shadow: 0 6px 18px rgba(240,185,44,0.22); }
+  .btn.ghost { background: rgba(255,255,255,0.04); border: 0.5px solid var(--border); color: var(--text); }
+  .btn.block { width: 100%; }
+  .btn:active { transform: scale(0.98); }
+
+  /* TAB BAR */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; height: var(--tabbar); padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: flex; align-items: stretch; background: rgba(8,8,10,0.9); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-top: 0.5px solid var(--border); max-width: 640px; margin: 0 auto; }
+  .tab { flex: 1; background: none; border: 0; color: var(--text-faint); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; font-family: 'Outfit'; font-weight: 600; font-size: 10px; }
+  .tab i { font-size: 23px; }
+  .tab.active { color: var(--gold-bright); }
+  .tab-fab { flex: 0 0 auto; width: 58px; display: grid; place-items: center; }
+  .tab-fab button { width: 50px; height: 50px; border-radius: 16px; border: 0; background: var(--gold-grad); color: #1A1206; font-size: 27px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 6px 20px rgba(240,185,44,0.38); }
+  .tab-fab button:active { transform: scale(0.92); }
+
+  /* SHEETS & OVERLAYS */
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: flex; align-items: flex-end; justify-content: center; animation: fade .2s; }
+  .scrim.center { align-items: center; padding: 18px; }
+  @keyframes fade { from { opacity: 0; } }
+  .sheet { width: 100%; max-width: 640px; max-height: 92vh; overflow-y: auto; background: var(--surface); border-radius: 22px 22px 0 0; border-top: 0.5px solid var(--border-2); padding: 8px 16px calc(20px + env(safe-area-inset-bottom,0px)); animation: up .26s cubic-bezier(.2,.7,.2,1); }
+  .sheet.modal { border-radius: 20px; max-width: 460px; animation: pop .22s; }
+  @keyframes up { from { transform: translateY(100%); } }
+  @keyframes pop { from { transform: scale(.95); opacity: 0; } }
+  .grab { width: 38px; height: 4px; border-radius: 99px; background: var(--border-2); margin: 6px auto 14px; }
+  .sheet-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .sheet-h .t { font-family: 'Outfit'; font-weight: 800; font-size: 19px; }
+
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-family: 'Outfit'; font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-faint); margin-bottom: 6px; }
+  .inp, textarea.inp, select.inp { width: 100%; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 11px; padding: 12px 13px; font-size: 15px; outline: none; transition: .15s; }
+  .inp:focus { border-color: var(--gold-line); }
+  textarea.inp { resize: none; line-height: 1.5; }
+  .seg2 { display: flex; gap: 6px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 4px; margin-bottom: 14px; }
+  .seg2 button { flex: 1; background: none; border: 0; color: var(--text-dim); font-family: 'Outfit'; font-weight: 600; font-size: 14px; padding: 10px; border-radius: 9px; cursor: pointer; }
+  .seg2 button.active { background: var(--gold-grad); color: #1A1206; }
+  .comp-tools { display: flex; align-items: center; gap: 8px; margin: 6px 0 14px; }
+  .toolbtn { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 0.5px solid var(--border); color: var(--text-dim); font-family: 'Outfit'; font-weight: 600; font-size: 13px; padding: 9px 13px; border-radius: 10px; cursor: pointer; }
+  .toolbtn i { font-size: 17px; }
+  .img-prev { position: relative; margin-bottom: 14px; }
+  .img-prev img { width: 100%; border-radius: 12px; max-height: 320px; object-fit: cover; }
+  .img-prev .rm { position: absolute; top: 9px; right: 9px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(0,0,0,0.6); color: #fff; cursor: pointer; }
+
+  /* LISTING DETAIL */
+  .detail { width: 100%; max-width: 640px; max-height: 94vh; overflow-y: auto; background: var(--bg); border-radius: 22px 22px 0 0; animation: up .26s cubic-bezier(.2,.7,.2,1); }
+  .detail img.hero { width: 100%; max-height: 50vh; object-fit: cover; }
+  .detail .noimg-hero { height: 180px; display: grid; place-items: center; background: var(--surface-2); font-size: 50px; color: var(--text-faint); }
+  .detail .body { padding: 16px 16px calc(96px + env(safe-area-inset-bottom,0px)); }
+  .detail .price { font-family: 'Outfit'; font-weight: 800; font-size: 28px; color: var(--gold-bright); }
+  .detail .title { font-family: 'Outfit'; font-weight: 700; font-size: 19px; margin: 4px 0 8px; }
+  .detail .seller { display: flex; align-items: center; gap: 11px; padding: 12px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; margin: 14px 0; }
+  .detail .desc { font-size: 15px; line-height: 1.6; color: var(--text-dim); white-space: pre-wrap; }
+  .detail-bar { position: fixed; bottom: 0; left: 0; right: 0; max-width: 640px; margin: 0 auto; display: flex; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom,0px)); background: rgba(8,8,10,0.92); backdrop-filter: blur(14px); border-top: 0.5px solid var(--border); }
+  .close-x { width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.06); color: var(--text); font-size: 20px; cursor: pointer; }
+
+  /* CHAT */
+  .chat { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: flex; flex-direction: column; animation: slide .25s; }
+  @keyframes slide { from { transform: translateX(100%); } }
+  .chat-top { height: calc(var(--topbar) + env(safe-area-inset-top,0px)); padding-top: env(safe-area-inset-top,0px); display: flex; align-items: center; gap: 11px; padding-left: 8px; padding-right: 14px; border-bottom: 0.5px solid var(--border); background: rgba(8,8,10,0.9); backdrop-filter: blur(14px); }
+  .chat-top .nm { font-family: 'Outfit'; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 5px; }
+  .chat-top .sub { font-size: 12px; color: var(--text-faint); }
+  .chat-msgs { flex: 1; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .msg { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 15px; line-height: 1.4; word-wrap: break-word; }
+  .msg.them { background: var(--surface-2); align-self: flex-start; border-bottom-left-radius: 5px; }
+  .msg.me { background: var(--gold-grad); color: #1A1206; align-self: flex-end; border-bottom-right-radius: 5px; font-weight: 500; }
+  .chat-ctx { text-align: center; font-size: 11.5px; color: var(--text-faint); padding: 6px 0 10px; }
+  .chat-in { display: flex; align-items: center; gap: 9px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom,0px)); border-top: 0.5px solid var(--border); background: var(--bg); }
+  .chat-in input { flex: 1; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 99px; padding: 11px 16px; font-size: 15px; outline: none; }
+  .chat-in button { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--gold-grad); color: #1A1206; font-size: 20px; display: grid; place-items: center; cursor: pointer; flex-shrink: 0; }
+
+  .empty { text-align: center; color: var(--text-faint); padding: 50px 18px; font-family: 'Outfit'; }
+  .empty i { font-size: 38px; color: var(--gold); opacity: 0.55; display: block; margin-bottom: 12px; }
+  .empty .t { font-weight: 700; font-size: 16px; color: var(--text-dim); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header class="topbar tall">
+  <div class="brand" id="brand"><img class="mk" src="branding/ksword-gold.svg" alt="KnightMarket" /><span class="ttl">Knight<b>Market</b></span></div>
+  <span class="vtitle hidden" id="vtitle"></span>
+  <button class="icon-btn" id="topProfile"><i class="ti ti-user"></i></button>
+</header>
+
+<main id="app">
+  <!-- FEED -->
+  <section class="view" data-view="feed">
+    <div class="card compose-trigger" id="composeTrigger">
+      <div class="avatar sm" id="ctAvatar">Y</div>
+      <span class="ph">What's on your mind, Knight?</span>
+      <span class="go"><i class="ti ti-pencil-plus"></i></span>
+    </div>
+    <div class="chips" id="feedChips">
+      <button class="chip active" data-f="all">All</button>
+      <button class="chip" data-f="posts">Posts</button>
+      <button class="chip" data-f="Sublease">Subleases</button>
+      <button class="chip" data-f="Item">Items</button>
+      <button class="chip" data-f="Roommate">Roommates</button>
+      <button class="chip" data-f="Textbook">Textbooks</button>
+    </div>
+    <div id="feedList"></div>
+  </section>
+
+  <!-- MARKET -->
+  <section class="view hidden" data-view="market">
+    <div class="search"><i class="ti ti-search"></i><input id="mktSearch" placeholder="Search the marketplace…" /></div>
+    <div class="chips" id="mktChips">
+      <button class="chip active" data-c="all">All</button>
+      <button class="chip" data-c="Sublease">Subleases</button>
+      <button class="chip" data-c="Item">Items</button>
+      <button class="chip" data-c="Roommate">Roommates</button>
+      <button class="chip" data-c="Textbook">Textbooks</button>
+      <button class="chip" data-c="Furniture">Furniture</button>
+    </div>
+    <div class="mkt-toolbar">
+      <span style="font-family:'Outfit';font-weight:700;font-size:14px" id="mktCount"></span>
+      <div class="seg" id="mktViewSeg">
+        <button class="active" data-m="list"><i class="ti ti-layout-grid"></i> List</button>
+        <button data-m="map"><i class="ti ti-map-2"></i> Map</button>
+      </div>
+    </div>
+    <div class="mkt-grid" id="mktGrid"></div>
+    <div id="map" class="hidden"></div>
+  </section>
+
+  <!-- MESSAGES -->
+  <section class="view hidden" data-view="messages">
+    <div class="view-head">Messages</div>
+    <div id="threadList"></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="view hidden" data-view="profile">
+    <div id="profileBody"></div>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <button class="tab active" data-tab="feed"><i class="ti ti-home"></i>Feed</button>
+  <button class="tab" data-tab="market"><i class="ti ti-building-store"></i>Market</button>
+  <div class="tab-fab"><button id="fab"><i class="ti ti-plus"></i></button></div>
+  <button class="tab" data-tab="messages"><i class="ti ti-message-circle"></i>Chats</button>
+  <button class="tab" data-tab="profile"><i class="ti ti-user"></i>Profile</button>
+</nav>
+
+<div id="overlayRoot"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+"use strict";
+
+/* ===== Storage ===== */
+const UKEY = "km_user.v2", PKEY = "km_posts.v2", TKEY = "km_threads.v2";
+function load(k, fb) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch (e) { return fb; } }
+const saveU = () => localStorage.setItem(UKEY, JSON.stringify(user));
+const saveP = () => localStorage.setItem(PKEY, JSON.stringify(posts));
+const saveT = () => localStorage.setItem(TKEY, JSON.stringify(threads));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const $ = s => document.querySelector(s);
+const UCF = [28.6016, -81.2005];
+
+let user = load(UKEY, { name: "You", major: "UCF Knight", year: "", bio: "", rating: 0, deals: 0 });
+let posts = load(PKEY, null);
+let threads = load(TKEY, null);
+let view = "feed";
+let mktCat = "all", mktQuery = "", mktMode = "list";
+let feedFilter = "all";
+let mapObj = null, mapMarkers = [];
+
+/* ===== Helpers ===== */
+function initials(n) { const p = (n || "?").trim().split(/\s+/); return ((p[0]?.[0] || "") + (p[1]?.[0] || "")).toUpperCase() || "?"; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function timeAgo(ts) { const s = (Date.now() - ts) / 1000; if (s < 45) return "now"; if (s < 3600) return Math.floor(s / 60) + "m"; if (s < 86400) return Math.floor(s / 3600) + "h"; if (s < 604800) return Math.floor(s / 86400) + "d"; return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric" }); }
+const catIcon = c => ({ Sublease: "ti-home", Item: "ti-tag", Roommate: "ti-users", Textbook: "ti-book", Furniture: "ti-sofa" }[c] || "ti-tag");
+function jitter(base) { return base + (Math.random() - 0.5) * 0.03; }
+
+/* ===== Seed ===== */
+function seedPosts() {
+  const n = Date.now();
+  return [
+    { id: uid(), mine: false, name: "Jamie Rivera", major: "Computer Science · '26", text: "Subleasing my fully furnished room at The Lofts for summer — 5 min walk to campus, utilities included. Super quiet building, perfect for finals grind.", image: null, listing: { title: "Furnished room @ The Lofts", price: "$650/mo", cat: "Sublease", location: "Alafaya", lat: 28.607, lng: -81.196 }, likes: 12, liked: false, saved: false, ts: n - 3.6e6, comments: [{ id: uid(), name: "Alex P.", text: "Is it pet friendly?", ts: n - 1.8e6 }] },
+    { id: uid(), mine: false, name: "Maria Chen", major: "Biology · '27", text: "Selling my Calc 2 textbook + a TI-84 calculator. Both in great shape, saved me this semester.", image: null, listing: { title: "Calc 2 book + TI-84", price: "$40", cat: "Textbook", location: "Near campus", lat: 28.598, lng: -81.205 }, likes: 5, liked: false, saved: false, ts: n - 7.2e6, comments: [] },
+    { id: uid(), mine: false, name: "Devon Brooks", major: "Business · '25", text: "Anyone down to start a late-night study group at the library this week? The new dining hours are rough 😩", image: null, listing: null, likes: 23, liked: true, saved: false, ts: n - 1.1e7, comments: [{ id: uid(), name: "Sam K.", text: "I'm in! Thursday?", ts: n - 1.0e7 }, { id: uid(), name: "Priya N.", text: "count me in", ts: n - 0.9e7 }] },
+    { id: uid(), mine: false, name: "Tyler Nguyen", major: "Mechanical Eng · '26", text: "Looking for 1 roommate for a 2BR at Northgate Lakes starting fall. $720/mo, gym + pool. Clean and chill, no drama.", image: null, listing: { title: "Roommate needed — Northgate", price: "$720/mo", cat: "Roommate", location: "Northgate Lakes", lat: 28.604, lng: -81.188 }, likes: 8, liked: false, saved: false, ts: n - 1.6e7, comments: [] },
+    { id: uid(), mine: false, name: "Sofia Alvarez", major: "Psychology · '28", text: "IKEA desk + chair, barely used. Moving out so it's gotta go this week. Can help carry to your car.", image: null, listing: { title: "IKEA desk + chair", price: "$55", cat: "Furniture", location: "Knights Circle", lat: 28.595, lng: -81.197 }, likes: 14, liked: false, saved: false, ts: n - 2.1e7, comments: [] },
+  ];
+}
+function seedThreads() {
+  const n = Date.now();
+  return [
+    { id: uid(), name: "Jamie Rivera", major: "Computer Science · '26", subject: "Furnished room @ The Lofts", lastTs: n - 5e5, unread: true, messages: [{ id: uid(), me: false, text: "Hey! Saw you're interested in the sublease 👋", ts: n - 9e5 }, { id: uid(), me: false, text: "It's available June–August. Want to tour this week?", ts: n - 5e5 }] },
+    { id: uid(), name: "Maria Chen", major: "Biology · '27", subject: "Calc 2 book + TI-84", lastTs: n - 8.6e6, unread: false, messages: [{ id: uid(), me: true, text: "Hi! Is the TI-84 still available?", ts: n - 9e6 }, { id: uid(), me: false, text: "Yes it is! Can meet at the library tomorrow.", ts: n - 8.6e6 }] },
+  ];
+}
+if (!Array.isArray(posts)) { posts = seedPosts(); saveP(); }
+if (!Array.isArray(threads)) { threads = seedThreads(); saveT(); }
+
+/* ===== Navigation ===== */
+function nav(v) {
+  view = v;
+  document.querySelectorAll(".view").forEach(s => s.classList.toggle("hidden", s.dataset.view !== v));
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === v));
+  const showBrand = v === "feed";
+  $("#brand").classList.toggle("hidden", !showBrand);
+  $("#vtitle").classList.toggle("hidden", showBrand);
+  $("#vtitle").textContent = { market: "Marketplace", messages: "Messages", profile: "Profile" }[v] || "";
+  window.scrollTo(0, 0);
+  if (v === "feed") renderFeed();
+  if (v === "market") renderMarket();
+  if (v === "messages") renderMessages();
+  if (v === "profile") renderProfile();
+}
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => nav(t.dataset.tab)));
+$("#topProfile").addEventListener("click", () => nav("profile"));
+$("#brand").addEventListener("click", () => nav("feed"));
+
+/* ===== FEED ===== */
+function renderFeed() {
+  $("#ctAvatar").textContent = initials(user.name);
+  const list = $("#feedList");
+  let items = posts;
+  if (feedFilter === "posts") items = posts.filter(p => !p.listing);
+  else if (feedFilter !== "all") items = posts.filter(p => p.listing && p.listing.cat === feedFilter);
+  if (!items.length) { list.innerHTML = emptyHTML("ti-message-2", "No posts yet", "Tap + to share something."); return; }
+  list.innerHTML = items.map(postHTML).join("");
+  items.forEach(p => wirePost(p.id));
+}
+function postHTML(p) {
+  const listing = p.listing ? `<div class="listing-badge"><span class="price">${esc(p.listing.price || "")}</span><span class="cat">${esc(p.listing.cat)}</span><button class="act on" style="margin-left:auto;flex:0;padding:6px 12px" data-open="${p.id}">View</button></div>` : "";
+  const img = p.image ? `<div class="post-img"><img src="${p.image}" alt=""/></div>` : "";
+  const text = p.text ? `<div class="post-text">${esc(p.text)}</div>` : "";
+  const del = p.mine ? `<button class="post-menu" data-del="${p.id}"><i class="ti ti-trash"></i></button>` : "";
+  const comments = (p.comments || []).map(c => `<div class="comment"><div class="avatar xs">${initials(c.name)}</div><div><div class="bubble"><div class="cn">${esc(c.name)}</div><div class="ct">${esc(c.text)}</div></div></div></div>`).join("");
+  return `<div class="card post" data-id="${p.id}">
+    <div class="post-head"><div class="avatar md">${initials(p.name)}</div>
+      <div class="who"><div class="nm">${esc(p.name)} <i class="ti ti-rosette-discount-check-filled vchk"></i></div><div class="meta">${esc(p.major || "UCF Knight")} · ${timeAgo(p.ts)}</div></div>${del}</div>
+    ${text}${img}${listing}
+    <div class="post-actions">
+      <button class="act like ${p.liked ? "on" : ""}" data-like="${p.id}"><i class="ti ti-heart${p.liked ? "-filled" : ""}"></i> ${p.likes || 0}</button>
+      <button class="act" data-cm="${p.id}"><i class="ti ti-message-circle"></i> ${(p.comments || []).length}</button>
+      ${p.listing ? `<button class="act" data-msg="${p.id}"><i class="ti ti-send"></i> Message</button>` : `<button class="act" data-cm="${p.id}"><i class="ti ti-share-3"></i> Share</button>`}
+    </div>
+    <div class="comments" id="cm-${p.id}">${comments}<div class="cinput"><div class="avatar xs">${initials(user.name)}</div><input data-ci="${p.id}" placeholder="Write a comment…" maxlength="300"/><button data-cs="${p.id}"><i class="ti ti-send"></i></button></div></div>
+  </div>`;
+}
+function wirePost(id) {
+  const r = $(`.post[data-id="${id}"]`); if (!r) return;
+  r.querySelector(`[data-like="${id}"]`)?.addEventListener("click", () => { const p = posts.find(x => x.id === id); p.liked = !p.liked; p.likes = (p.likes || 0) + (p.liked ? 1 : -1); saveP(); renderFeed(); });
+  r.querySelectorAll(`[data-cm="${id}"]`).forEach(b => b.addEventListener("click", () => $("#cm-" + id).classList.toggle("on")));
+  r.querySelector(`[data-del="${id}"]`)?.addEventListener("click", () => { if (confirm("Delete this post?")) { posts = posts.filter(x => x.id !== id); saveP(); renderFeed(); } });
+  r.querySelector(`[data-open="${id}"]`)?.addEventListener("click", () => openDetail(id));
+  r.querySelector(`[data-msg="${id}"]`)?.addEventListener("click", () => messageSeller(id));
+  const ci = r.querySelector(`[data-ci="${id}"]`), cs = r.querySelector(`[data-cs="${id}"]`);
+  const add = () => { const t = ci.value.trim(); if (!t) return; const p = posts.find(x => x.id === id); (p.comments = p.comments || []).push({ id: uid(), name: user.name, text: t, ts: Date.now() }); saveP(); renderFeed(); setTimeout(() => $("#cm-" + id)?.classList.add("on"), 0); };
+  cs?.addEventListener("click", add);
+  ci?.addEventListener("keydown", e => { if (e.key === "Enter") add(); });
+}
+$("#feedChips").querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => { $("#feedChips").querySelectorAll(".chip").forEach(x => x.classList.remove("active")); c.classList.add("active"); feedFilter = c.dataset.f; renderFeed(); }));
+
+/* ===== MARKET ===== */
+function marketItems() {
+  let items = posts.filter(p => p.listing);
+  if (mktCat !== "all") items = items.filter(p => p.listing.cat === mktCat);
+  if (mktQuery) { const q = mktQuery.toLowerCase(); items = items.filter(p => (p.listing.title + " " + (p.text || "") + " " + p.listing.cat + " " + (p.listing.location || "")).toLowerCase().includes(q)); }
+  return items;
+}
+function renderMarket() {
+  const items = marketItems();
+  $("#mktCount").textContent = items.length + (items.length === 1 ? " listing" : " listings");
+  const grid = $("#mktGrid"), map = $("#map");
+  if (mktMode === "map") {
+    grid.classList.add("hidden"); map.classList.remove("hidden"); renderMap(items);
+    return;
+  }
+  map.classList.add("hidden"); grid.classList.remove("hidden");
+  if (!items.length) { grid.innerHTML = `<div style="grid-column:1/-1">${emptyHTML("ti-building-store", "No listings", "Try another category or post one with +.")}</div>`; return; }
+  grid.innerHTML = items.map(p => {
+    const L = p.listing;
+    const thumb = p.image ? `<img src="${p.image}" alt=""/>` : `<i class="ti ${catIcon(L.cat)} noimg"></i>`;
+    return `<div class="mkt-card" data-open="${p.id}">
+      <div class="mkt-thumb"><span class="catpill">${esc(L.cat)}</span><button class="save ${p.saved ? "on" : ""}" data-save="${p.id}"><i class="ti ti-bookmark${p.saved ? "-filled" : ""}"></i></button>${thumb}</div>
+      <div class="mkt-info"><div class="pr">${esc(L.price)}</div><div class="ti">${esc(L.title || p.text || "")}</div><div class="lo"><i class="ti ti-map-pin"></i>${esc(L.location || "UCF area")}</div></div>
+    </div>`;
+  }).join("");
+  grid.querySelectorAll("[data-open]").forEach(el => el.addEventListener("click", e => { if (e.target.closest("[data-save]")) return; openDetail(el.dataset.open); }));
+  grid.querySelectorAll("[data-save]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); toggleSave(b.dataset.save); }));
+}
+function toggleSave(id) { const p = posts.find(x => x.id === id); if (!p) return; p.saved = !p.saved; saveP(); if (view === "market") renderMarket(); if (view === "profile") renderProfile(); }
+function renderMap(items) {
+  if (!window.L) { $("#map").innerHTML = `<div class="empty" style="padding-top:120px"><i class="ti ti-map-off"></i><div class="t">Map unavailable offline</div></div>`; return; }
+  if (!mapObj) {
+    mapObj = L.map("map", { zoomControl: true, attributionControl: false }).setView(UCF, 14);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { maxZoom: 19 }).addTo(mapObj);
+    L.circleMarker(UCF, { radius: 8, color: "#F0B92C", fillColor: "#F0B92C", fillOpacity: 0.5 }).addTo(mapObj).bindPopup("<div class='map-pop'><div class='t'>UCF Campus</div></div>");
+  }
+  setTimeout(() => mapObj.invalidateSize(), 60);
+  mapMarkers.forEach(m => mapObj.removeLayer(m)); mapMarkers = [];
+  items.forEach(p => {
+    const L2 = p.listing; if (!L2) return;
+    const lat = L2.lat || (L2.lat = jitter(UCF[0])), lng = L2.lng || (L2.lng = jitter(UCF[1]));
+    const mk = L.marker([lat, lng]).addTo(mapObj);
+    mk.bindPopup(`<div class="map-pop"><div class="p">${esc(L2.price)}</div><div class="t">${esc(L2.title || "")}</div><button onclick="openDetail('${p.id}')">View</button></div>`);
+    mapMarkers.push(mk);
+  });
+  saveP();
+}
+$("#mktChips").querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => { $("#mktChips").querySelectorAll(".chip").forEach(x => x.classList.remove("active")); c.classList.add("active"); mktCat = c.dataset.c; renderMarket(); }));
+$("#mktSearch").addEventListener("input", e => { mktQuery = e.target.value; renderMarket(); });
+$("#mktViewSeg").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { $("#mktViewSeg").querySelectorAll("button").forEach(x => x.classList.remove("active")); b.classList.add("active"); mktMode = b.dataset.m; renderMarket(); }));
+
+/* ===== LISTING DETAIL ===== */
+function openDetail(id) {
+  const p = posts.find(x => x.id === id); if (!p) return;
+  const L = p.listing;
+  const hero = p.image ? `<img class="hero" src="${p.image}" alt=""/>` : (L ? `<div class="noimg-hero"><i class="ti ${catIcon(L.cat)}"></i></div>` : "");
+  const html = `<div class="scrim" data-scrim><div class="detail">
+    <div style="position:absolute;z-index:2;padding:12px;display:flex;justify-content:space-between;width:100%;max-width:640px">
+      <button class="close-x" data-close>&times;</button>
+      ${L ? `<button class="close-x" data-save2="${id}"><i class="ti ti-bookmark${p.saved ? "-filled" : ""}" style="color:${p.saved ? "#FFD75E" : "#fff"}"></i></button>` : "<span></span>"}
+    </div>
+    ${hero}
+    <div class="body">
+      ${L ? `<div class="price">${esc(L.price)}</div><div class="title">${esc(L.title || "")}</div><div class="lo" style="color:var(--text-dim);font-size:13.5px;display:flex;gap:5px;align-items:center"><i class="ti ti-map-pin"></i>${esc(L.location || "UCF area")} · <span class="cat" style="font-family:'Outfit';font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--gold)">${esc(L.cat)}</span></div>` : ""}
+      <div class="seller"><div class="avatar md">${initials(p.name)}</div><div style="flex:1"><div class="nm" style="font-family:'Outfit';font-weight:700;display:flex;align-items:center;gap:5px">${esc(p.name)} <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:14px"></i></div><div style="font-size:12.5px;color:var(--text-faint)">${esc(p.major || "UCF Knight")}</div></div><span style="color:var(--gold);font-family:'Outfit';font-weight:700;font-size:13px"><i class="ti ti-star-filled" style="font-size:12px"></i> 4.9</span></div>
+      <div class="desc">${esc(p.text || "No description provided.")}</div>
+    </div>
+    <div class="detail-bar">
+      <button class="btn ghost" data-save2="${id}" style="flex:0 0 52px"><i class="ti ti-bookmark${p.saved ? "-filled" : ""}"></i></button>
+      <button class="btn gold block" data-msg2="${id}"><i class="ti ti-send"></i> Message ${esc(p.name.split(" ")[0])}</button>
+    </div>
+  </div></div>`;
+  mount(html);
+  $("[data-msg2]").addEventListener("click", () => { closeOverlay(); messageSeller(id); });
+  document.querySelectorAll("[data-save2]").forEach(b => b.addEventListener("click", () => { toggleSave(id); closeOverlay(); openDetail(id); }));
+}
+
+/* ===== MESSAGES ===== */
+function renderMessages() {
+  const list = $("#threadList");
+  if (!threads.length) { list.innerHTML = emptyHTML("ti-message-circle", "No messages yet", "Message a seller from the Market to start a chat."); return; }
+  threads.sort((a, b) => b.lastTs - a.lastTs);
+  list.innerHTML = threads.map(t => {
+    const last = t.messages[t.messages.length - 1];
+    return `<div class="thread" data-thread="${t.id}"><div class="avatar md">${initials(t.name)}</div>
+      <div class="tb"><div class="tn">${esc(t.name)} <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:13px"></i></div><div class="tl">${last ? (last.me ? "You: " : "") + esc(last.text) : esc(t.subject || "")}</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="tt">${timeAgo(t.lastTs)}</span>${t.unread ? '<span class="dot"></span>' : ""}</div></div>`;
+  }).join("");
+  list.querySelectorAll("[data-thread]").forEach(el => el.addEventListener("click", () => openChat(el.dataset.thread)));
+}
+function messageSeller(postId) {
+  const p = posts.find(x => x.id === postId); if (!p) return;
+  let t = threads.find(x => x.name === p.name && x.subject === (p.listing ? p.listing.title : p.text));
+  if (!t) { t = { id: uid(), name: p.name, major: p.major, subject: p.listing ? p.listing.title : (p.text || "").slice(0, 40), lastTs: Date.now(), unread: false, messages: [] }; threads.push(t); saveT(); }
+  openChat(t.id);
+}
+function openChat(tid) {
+  const t = threads.find(x => x.id === tid); if (!t) return;
+  t.unread = false; saveT();
+  const msgs = t.messages.map(m => `<div class="msg ${m.me ? "me" : "them"}">${esc(m.text)}</div>`).join("");
+  const html = `<div class="chat">
+    <div class="chat-top"><button class="icon-btn" data-back><i class="ti ti-chevron-left"></i></button><div class="avatar sm">${initials(t.name)}</div><div><div class="nm">${esc(t.name)} <i class="ti ti-rosette-discount-check-filled vchk" style="font-size:13px"></i></div><div class="sub">${esc(t.major || "UCF Knight")}</div></div></div>
+    <div class="chat-msgs" id="chatMsgs">${t.subject ? `<div class="chat-ctx">Re: ${esc(t.subject)}</div>` : ""}${msgs}</div>
+    <div class="chat-in"><input id="chatInput" placeholder="Message…" /><button data-send><i class="ti ti-send"></i></button></div>
+  </div>`;
+  mount(html);
+  const input = $("#chatInput"), box = $("#chatMsgs");
+  box.scrollTop = box.scrollHeight;
+  const send = () => {
+    const txt = input.value.trim(); if (!txt) return;
+    t.messages.push({ id: uid(), me: true, text: txt, ts: Date.now() }); t.lastTs = Date.now(); saveT();
+    box.insertAdjacentHTML("beforeend", `<div class="msg me">${esc(txt)}</div>`); input.value = ""; box.scrollTop = box.scrollHeight;
+    // simulated auto-reply
+    setTimeout(() => { t.messages.push({ id: uid(), me: false, text: autoReply(), ts: Date.now() }); t.lastTs = Date.now(); saveT(); if ($("#chatMsgs")) { $("#chatMsgs").insertAdjacentHTML("beforeend", `<div class="msg them">${esc(t.messages[t.messages.length - 1].text)}</div>`); $("#chatMsgs").scrollTop = $("#chatMsgs").scrollHeight; } }, 1100 + Math.random() * 900);
+  };
+  $("[data-send]").addEventListener("click", send);
+  input.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+  $("[data-back]").addEventListener("click", () => { closeOverlay(); if (view === "messages") renderMessages(); });
+  setTimeout(() => input.focus(), 120);
+}
+function autoReply() { const r = ["Sounds good! When works for you?", "Yeah it's still available 👍", "Awesome, let's meet on campus.", "Can you do a little less? 😅", "Cool — DM me your schedule!", "Great, talk soon!"]; return r[Math.floor(Math.random() * r.length)]; }
+
+/* ===== PROFILE ===== */
+let profTab = "posts";
+function renderProfile() {
+  const myPosts = posts.filter(p => p.mine);
+  const saved = posts.filter(p => p.saved);
+  const listings = myPosts.filter(p => p.listing).length;
+  const ratingTxt = user.deals > 0 ? `${user.rating.toFixed(1)}★` : "New";
+  const body = $("#profileBody");
+  body.innerHTML = `
+    <div class="prof-head">
+      <div class="avatar lg">${initials(user.name)}</div>
+      <div class="prof-name">${esc(user.name)} <i class="ti ti-rosette-discount-check-filled vchk"></i></div>
+      <div class="prof-sub">${esc(user.major || "UCF Knight")}${user.year ? " · " + esc(user.year) : ""}</div>
+      <div class="prof-badge"><i class="ti ti-shield-check"></i> Verified UCF Student</div>
+      ${user.bio ? `<div class="prof-bio" style="margin-top:14px">${esc(user.bio)}</div>` : ""}
+      <div class="prof-stats">
+        <div class="pstat"><div class="n">${myPosts.length}</div><div class="l">Posts</div></div>
+        <div class="pstat"><div class="n">${listings}</div><div class="l">Listings</div></div>
+        <div class="pstat"><div class="n">${ratingTxt}</div><div class="l">Rating</div></div>
+      </div>
+      <button class="btn ghost block" id="editProfile"><i class="ti ti-pencil"></i> Edit profile</button>
+    </div>
+    <div class="chips" style="justify-content:center">
+      <button class="chip ${profTab === "posts" ? "active" : ""}" data-pt="posts">My posts</button>
+      <button class="chip ${profTab === "saved" ? "active" : ""}" data-pt="saved">Saved (${saved.length})</button>
+    </div>
+    <div id="profGrid"></div>
+    <button class="btn ghost block" id="resetBtn" style="margin-top:20px;color:var(--red)"><i class="ti ti-trash"></i> Reset demo data</button>`;
+  const items = profTab === "posts" ? myPosts : saved;
+  const grid = $("#profGrid");
+  if (!items.length) grid.innerHTML = emptyHTML(profTab === "posts" ? "ti-pencil" : "ti-bookmark", profTab === "posts" ? "No posts yet" : "Nothing saved", profTab === "posts" ? "Tap + to make your first post." : "Bookmark listings from the Market.");
+  else grid.innerHTML = items.map(postHTML).join(""), items.forEach(p => wirePost(p.id));
+  body.querySelectorAll("[data-pt]").forEach(b => b.addEventListener("click", () => { profTab = b.dataset.pt; renderProfile(); }));
+  $("#editProfile").addEventListener("click", openEditProfile);
+  $("#resetBtn").addEventListener("click", () => { if (confirm("Reset all demo data (posts, chats, profile)?")) { localStorage.removeItem(PKEY); localStorage.removeItem(TKEY); localStorage.removeItem(UKEY); location.reload(); } });
+}
+function openEditProfile() {
+  const html = `<div class="scrim center" data-scrim><div class="sheet modal">
+    <div class="sheet-h"><span class="t">Edit profile</span><button class="close-x" data-close>&times;</button></div>
+    <div class="field"><label>Name</label><input class="inp" id="epName" value="${esc(user.name === "You" ? "" : user.name)}" placeholder="Your name"/></div>
+    <div class="field"><label>Major</label><input class="inp" id="epMajor" value="${esc(user.major === "UCF Knight" ? "" : user.major)}" placeholder="e.g. Computer Science"/></div>
+    <div class="field"><label>Grad year</label><input class="inp" id="epYear" value="${esc(user.year)}" placeholder="e.g. '26"/></div>
+    <div class="field"><label>Bio</label><textarea class="inp" id="epBio" rows="2" placeholder="Tell Knights about you…">${esc(user.bio)}</textarea></div>
+    <button class="btn gold block" id="epSave">Save</button>
+  </div></div>`;
+  mount(html);
+  $("#epSave").addEventListener("click", () => {
+    user.name = $("#epName").value.trim() || "You";
+    user.major = $("#epMajor").value.trim() || "UCF Knight";
+    user.year = $("#epYear").value.trim();
+    user.bio = $("#epBio").value.trim();
+    saveU(); closeOverlay(); renderProfile(); $("#ctAvatar").textContent = initials(user.name);
+  });
+}
+
+/* ===== COMPOSER (Post / Sell) ===== */
+let compMode = "post", compImage = null;
+function openComposer() {
+  compMode = "post"; compImage = null;
+  const html = `<div class="scrim" data-scrim><div class="sheet"><div class="grab"></div>
+    <div class="sheet-h"><span class="t">Create</span><button class="close-x" data-close>&times;</button></div>
+    <div class="seg2" id="compSeg"><button class="active" data-cm="post">Post</button><button data-cm="sell">Sell / List</button></div>
+    <div id="sellFields" class="hidden">
+      <div class="field"><label>Title</label><input class="inp" id="cTitle" placeholder="e.g. Furnished room near campus" maxlength="60"/></div>
+      <div style="display:flex;gap:10px">
+        <div class="field" style="flex:1"><label>Price</label><input class="inp" id="cPrice" placeholder="$650/mo, $40, Free" maxlength="20"/></div>
+        <div class="field" style="flex:1"><label>Category</label><select class="inp" id="cCat"><option>Sublease</option><option>Item</option><option>Roommate</option><option>Textbook</option><option>Furniture</option></select></div>
+      </div>
+      <div class="field"><label>Location</label><input class="inp" id="cLoc" placeholder="e.g. Alafaya, Northgate, Knights Circle" maxlength="40"/></div>
+    </div>
+    <div class="field"><label id="cTextLabel">What's on your mind?</label><textarea class="inp" id="cText" rows="3" placeholder="Share something with Knights…" maxlength="2000"></textarea></div>
+    <div id="cImgPrev" class="img-prev hidden"><img id="cImgEl" alt=""/><button class="rm" id="cImgRm">&times;</button></div>
+    <div class="comp-tools">
+      <button class="toolbtn" id="cPhotoBtn"><i class="ti ti-photo"></i> Photo</button>
+      <input type="file" id="cPhoto" accept="image/*" hidden/>
+      <button class="btn gold" id="cPost" style="margin-left:auto" disabled>Post</button>
+    </div>
+  </div></div>`;
+  mount(html);
+  const seg = $("#compSeg"), sell = $("#sellFields"), text = $("#cText"), postBtn = $("#cPost");
+  const refresh = () => {
+    if (compMode === "sell") { postBtn.disabled = !($("#cTitle").value.trim() && $("#cPrice").value.trim()); }
+    else { postBtn.disabled = !(text.value.trim() || compImage); }
+  };
+  seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    seg.querySelectorAll("button").forEach(x => x.classList.remove("active")); b.classList.add("active");
+    compMode = b.dataset.cm;
+    sell.classList.toggle("hidden", compMode !== "sell");
+    $("#cTextLabel").textContent = compMode === "sell" ? "Description" : "What's on your mind?";
+    text.placeholder = compMode === "sell" ? "Describe your listing…" : "Share something with Knights…";
+    postBtn.textContent = compMode === "sell" ? "List it" : "Post";
+    refresh();
+  }));
+  text.addEventListener("input", refresh);
+  ["cTitle", "cPrice"].forEach(id => document.addEventListener("input", e => { if (e.target.id === id) refresh(); }));
+  $("#sellFields").addEventListener("input", refresh);
+  $("#cPhotoBtn").addEventListener("click", () => $("#cPhoto").click());
+  $("#cPhoto").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; resizeImage(f, d => { compImage = d; $("#cImgEl").src = d; $("#cImgPrev").classList.remove("hidden"); refresh(); }); e.target.value = ""; });
+  $("#cImgRm").addEventListener("click", () => { compImage = null; $("#cImgPrev").classList.add("hidden"); refresh(); });
+  postBtn.addEventListener("click", submitComposer);
+}
+function submitComposer() {
+  const text = $("#cText").value.trim();
+  let listing = null;
+  if (compMode === "sell") {
+    const title = $("#cTitle").value.trim(), price = $("#cPrice").value.trim();
+    if (!title || !price) return;
+    listing = { title, price, cat: $("#cCat").value, location: $("#cLoc").value.trim() || "UCF area", lat: jitter(UCF[0]), lng: jitter(UCF[1]) };
+  } else if (!text && !compImage) return;
+  posts.unshift({ id: uid(), mine: true, name: user.name, major: user.major + (user.year ? " · " + user.year : ""), text, image: compImage, listing, likes: 0, liked: false, saved: false, ts: Date.now(), comments: [] });
+  saveP(); closeOverlay();
+  if (listing) { mktCat = "all"; mktQuery = ""; nav("market"); } else { feedFilter = "all"; $("#feedChips").querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c.dataset.f === "all")); nav("feed"); }
+}
+$("#fab").addEventListener("click", openComposer);
+$("#composeTrigger").addEventListener("click", openComposer);
+
+/* ===== Overlay plumbing ===== */
+function mount(html) { const root = $("#overlayRoot"); root.innerHTML = html; root.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", closeOverlay)); const sc = root.querySelector("[data-scrim]"); if (sc) sc.addEventListener("click", e => { if (e.target === sc) closeOverlay(); }); }
+function closeOverlay() { $("#overlayRoot").innerHTML = ""; }
+
+/* ===== Image resize ===== */
+function resizeImage(file, cb) {
+  const reader = new FileReader();
+  reader.onload = e => { const img = new Image(); img.onload = () => { const max = 1200; let w = img.width, h = img.height; if (w > max || h > max) { const r = Math.min(max / w, max / h); w = Math.round(w * r); h = Math.round(h * r); } const c = document.createElement("canvas"); c.width = w; c.height = h; c.getContext("2d").drawImage(img, 0, 0, w, h); cb(c.toDataURL("image/jpeg", 0.82)); }; img.src = e.target.result; };
+  reader.readAsDataURL(file);
+}
+
+function emptyHTML(icon, title, sub) { return `<div class="empty"><i class="ti ${icon}"></i><div class="t">${title}</div>${sub || ""}</div>`; }
+
+/* ===== Go ===== */
+nav("feed");
+</script>
+</body>
+</html>
