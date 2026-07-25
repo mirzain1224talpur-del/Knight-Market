@@ -976,6 +976,16 @@
         return false;
       }
 
+      // "Contact form submitted" — GA4 recommended event: sign_up. Fired only on
+      // a real successful signup (not on validation errors), and never with the
+      // email address itself — GA4's terms prohibit sending PII in event params.
+      if (window.kmTrack) {
+        window.kmTrack('sign_up', {
+          method: 'waitlist_form',
+          form_location: (form.closest('section') && form.closest('section').id) || 'unknown'
+        });
+      }
+
       form.style.display = 'none';
       let msg = form.nextElementSibling;
       if (!msg || !msg.classList || !msg.classList.contains('success-msg')) msg = document.getElementById('successMsg');
@@ -1026,6 +1036,64 @@
         entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); numIo.unobserve(e.target); } });
       }, { threshold: 0.4 });
       document.querySelectorAll('.km-stat-num[data-count]').forEach(el => numIo.observe(el));
+    })();
+  </script>
+
+  <!-- Custom GA4 event tracking (analytics engineer pass, 2026-07-25).
+       All events go through kmTrack() so they're a no-op instead of a page
+       error if gtag hasn't loaded (e.g. blocked by a content blocker). -->
+  <script>
+    (function () {
+      function kmTrack(eventName, params) {
+        if (typeof gtag === 'function') gtag('event', eventName, params || {});
+      }
+      window.kmTrack = kmTrack; // handleWaitlist() also calls this for the sign_up event
+
+      // "Download App button clicked" (pre-launch equivalent) — the nav's
+      // primary CTA. GA4 recommended event: select_content. When a real App
+      // Store link ships, point it at the same handler with content_type: 'app_download'.
+      document.querySelectorAll('.km-nav-cta').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          kmTrack('select_content', { content_type: 'download_app_cta', item_id: 'nav_join_waitlist' });
+        });
+      });
+
+      // "External social media links clicked" — scoped to known social
+      // platforms (not every outbound link) so it's additive to, not a
+      // duplicate of, GA4 Enhanced Measurement's built-in outbound-click
+      // tracking. No social links exist on the site yet; this activates
+      // automatically the moment any get added — nothing else to wire up.
+      var SOCIAL_DOMAINS = ['instagram.com', 'twitter.com', 'x.com', 'tiktok.com', 'linkedin.com', 'facebook.com'];
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+        var host = (link.hostname || '').replace(/^www\./, '');
+        var platform = SOCIAL_DOMAINS.find(function (d) { return host === d || host.endsWith('.' + d); });
+        if (platform) kmTrack('social_click', { platform: platform, link_url: link.href });
+      });
+
+      // "Scroll depth" — 25/50/75/90%, each fires at most once per pageview.
+      // Custom event name (scroll_depth), distinct from GA4's own automatic
+      // `scroll` event (which only fires once, at 90%, via Enhanced Measurement).
+      var THRESHOLDS = [25, 50, 75, 90];
+      var fired = {};
+      var ticking = false;
+      function checkScrollDepth() {
+        ticking = false;
+        var doc = document.documentElement;
+        var scrollable = doc.scrollHeight - doc.clientHeight;
+        if (scrollable <= 0) return;
+        var percent = (window.scrollY / scrollable) * 100;
+        THRESHOLDS.forEach(function (t) {
+          if (percent >= t && !fired[t]) {
+            fired[t] = true;
+            kmTrack('scroll_depth', { percent_scrolled: t });
+          }
+        });
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { requestAnimationFrame(checkScrollDepth); ticking = true; }
+      }, { passive: true });
     })();
   </script>
 
