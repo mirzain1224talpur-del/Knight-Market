@@ -976,6 +976,15 @@
         return false;
       }
 
+      // A fresh row triggers the welcome email automatically via the
+      // on-waitlist-signup DB webhook. A duplicate email never creates a
+      // new row, so that webhook never fires — call send-welcome directly
+      // here so every signup attempt gets emailed, not just the first one.
+      if (error && error.code === '23505') {
+        db.functions.invoke('send-welcome', { body: { record: { email } } })
+          .catch((e) => console.error('Resend welcome email failed:', e));
+      }
+
       // "Contact form submitted" — GA4 recommended event: sign_up. Fired only on
       // a real successful signup (not on validation errors), and never with the
       // email address itself — GA4's terms prohibit sending PII in event params.
