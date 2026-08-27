@@ -25,6 +25,17 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
+// This function is called two ways: server-side by the on-waitlist-signup DB
+// webhook (no CORS involved), and directly from the browser for a duplicate
+// signup (website/index.html's handleWaitlist). The browser call is a
+// cross-origin POST with custom headers, which triggers a CORS preflight —
+// without these headers that preflight fails and the real request never
+// goes out, so Resend never even sees it.
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
 const welcomeHtml = (): string => `
 <div style="background:#0A0A0A;padding:40px 20px;font-family:Helvetica,Arial,sans-serif;color:#F5F0E8;">
   <div style="max-width:480px;margin:0 auto;background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:40px;text-align:center;">
@@ -62,6 +73,10 @@ You received this because you signed up at KnightMarket. Not affiliated with the
 Unsubscribe: ${UNSUBSCRIBE_MAILTO}`;
 
 Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
   try {
     const payload = await req.json();
     const record = payload?.record;
@@ -71,7 +86,7 @@ Deno.serve(async (req) => {
     if (!email) {
       return new Response(JSON.stringify({ error: "No email in webhook payload" }), {
         status: 400,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
@@ -99,7 +114,7 @@ Deno.serve(async (req) => {
       console.error("Resend error:", errText);
       return new Response(JSON.stringify({ error: errText }), {
         status: 500,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
@@ -113,13 +128,13 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (err) {
     console.error("Function error:", err);
     return new Response(JSON.stringify({ error: String(err) }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 });
