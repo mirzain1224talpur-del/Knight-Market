@@ -270,6 +270,7 @@
 
     /* ===================== TRUST (identity) ===================== */
     .km-trust-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .km-trust-layout-solo { grid-template-columns: 1fr; max-width: 800px; margin: 0 auto; }
     @media(max-width:640px){ .km-trust-layout { grid-template-columns: 1fr; } }
     .km-profile-card { padding: 1.95rem; position: relative; overflow: hidden; }
     .km-profile-card::before { content:''; position:absolute; top:0; right:0; width:170px; height:170px; background: radial-gradient(circle at top right, rgba(240,185,44,0.13), transparent 70%); }
@@ -690,37 +691,7 @@
     <p class="km-section-label reveal">Trust &amp; identity</p>
     <h2 class="km-section-title reveal" style="--d:1">Know exactly who you're dealing with</h2>
     <p class="km-section-sub reveal" style="--d:2">Real names. Verified emails. Real reputations. Every Knight is who they say they are.</p>
-    <div class="km-trust-layout">
-      <div class="km-profile-card glass reveal">
-        <div class="km-profile-top">
-          <div class="km-avatar">JR</div>
-          <div>
-            <div class="km-profile-name">Jamie Rivera</div>
-            <div class="km-profile-sub">Listed 3 items · Member since Aug 2024</div>
-          </div>
-        </div>
-        <div class="km-verified-badge">
-          <i class="ti ti-circle-check"></i> Verified UCF Student
-        </div>
-        <div class="km-profile-fields">
-          <div class="km-profile-field">
-            <i class="ti ti-school"></i>
-            <div><span class="km-field-label">Major</span><span class="km-field-value">Computer Science</span></div>
-          </div>
-          <div class="km-profile-field">
-            <i class="ti ti-calendar-event"></i>
-            <div><span class="km-field-label">Graduation year</span><span class="km-field-value">Class of 2026</span></div>
-          </div>
-          <div class="km-profile-field">
-            <i class="ti ti-mail"></i>
-            <div><span class="km-field-label">Verified email</span><span class="km-field-value">ja123456@ucf.edu</span></div>
-          </div>
-        </div>
-        <div class="km-rating-row">
-          <span class="km-stars">★★★★★</span>
-          <span class="km-rating-text">4.9 · 12 transactions</span>
-        </div>
-      </div>
+    <div class="km-trust-layout km-trust-layout-solo">
       <div class="km-trust-points">
         <div class="km-trust-point glass glass-hover reveal" style="--d:1">
           <div class="km-trust-icon gold"><i class="ti ti-circle-check"></i></div>
